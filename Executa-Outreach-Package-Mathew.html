@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revenue Infrastructure Package — Executa | Mathew</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0a0a0f;
+    --bg2:      #0f0f17;
+    --bg3:      #141420;
+    --bg4:      #1a1a2a;
+    --border:   rgba(255,255,255,0.08);
+    --accent:   #c9a227;
+    --accent2:  #e0b840;
+    --accent-soft: rgba(201,162,39,0.10);
+    --accent-glow: rgba(201,162,39,0.20);
+    --text:     #f0ede8;
+    --text-muted: #8b8ba0;
+    --text-dim:   #555570;
+    --danger:   #ef4444;
+    --danger-soft: rgba(239,68,68,0.10);
+    --success:  #22c55e;
+    --success-soft: rgba(34,197,94,0.10);
+    --warning:  #f59e0b;
+    --warning-soft: rgba(245,158,11,0.10);
+    --sidebar-w: 260px;
+    --font: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font);
+    font-size:16px;
+    line-height:1.75;
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* ── SIDEBAR ─────────────────────── */
+  #sidebar {
+    width:var(--sidebar-w);
+    min-width:var(--sidebar-w);
+    position:fixed;
+    top:0; left:0; bottom:0;
+    background:var(--bg2);
+    border-right:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    overflow-y:auto;
+    z-index:100;
+  }
+  .sidebar-brand {
+    padding:24px 20px 20px;
+    border-bottom:1px solid var(--border);
+  }
+  .sidebar-brand .company {
+    font-size:13px;
+    font-weight:800;
+    color:var(--accent2);
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  .sidebar-brand .for-line {
+    font-size:11px;
+    color:var(--text-muted);
+    margin-top:4px;
+  }
+  #sidebar nav { padding:12px 0 24px; }
+  #sidebar nav a {
+    display:block;
+    padding:9px 20px;
+    font-size:12.5px;
+    color:var(--text-muted);
+    text-decoration:none;
+    border-left:2px solid transparent;
+    transition:all 0.15s;
+    line-height:1.4;
+  }
+  #sidebar nav a:hover { color:var(--text); background:rgba(255,255,255,0.03); }
+  #sidebar nav a.active {
+    color:var(--accent2);
+    border-left-color:var(--accent2);
+    background:var(--accent-soft);
+    font-weight:600;
+  }
+  .nav-group-label {
+    padding:14px 20px 6px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--text-dim);
+  }
+
+  /* ── MAIN ────────────────────────── */
+  #main {
+    margin-left:var(--sidebar-w);
+    flex:1;
+    max-width:860px;
+    padding:0 48px 120px;
+  }
+
+  /* ── HERO ────────────────────────── */
+  #hero {
+    padding:64px 0 56px;
+    border-bottom:1px solid var(--border);
+  }
+  .hero-tag {
+    display:inline-block;
+    background:var(--accent-soft);
+    color:var(--accent2);
+    padding:5px 14px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:20px;
+    border:1px solid var(--accent-glow);
+  }
+  #hero h1 {
+    font-size:40px;
+    font-weight:800;
+    line-height:1.15;
+    letter-spacing:-1px;
+    color:var(--text);
+    margin-bottom:20px;
+  }
+  #hero h1 span { color:var(--accent2); }
+  #hero .hero-sub {
+    font-size:17px;
+    color:var(--text-muted);
+    max-width:620px;
+    line-height:1.7;
+    margin-bottom:32px;
+  }
+  .hero-meta {
+    display:flex;
+    gap:32px;
+    flex-wrap:wrap;
+    margin-bottom:32px;
+  }
+  .hero-meta-item { display:flex; flex-direction:column; gap:2px; }
+  .hero-meta-item .label {
+    font-size:10px;
+    color:var(--text-dim);
+    font-weight:700;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+  }
+  .hero-meta-item .val {
+    font-size:14px;
+    color:var(--text);
+    font-weight:600;
+  }
+
+  /* ── VIDEO ─────────────────────── */
+  .video-placeholder {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:32px;
+    text-align:center;
+    margin-top:32px;
+  }
+  .video-placeholder .vp-icon {
+    font-size:40px;
+    margin-bottom:12px;
+    display:block;
+  }
+  .video-placeholder p {
+    font-size:14px;
+    color:var(--text-muted);
+    margin:0;
+  }
+
+  /* ── MARQUEE ─────────────────────── */
+  .marquee-wrap {
+    overflow:hidden;
+    padding:14px 0;
+    background:var(--accent-soft);
+    border-top:1px solid var(--accent-glow);
+    border-bottom:1px solid var(--accent-glow);
+    margin-bottom:0;
+  }
+  .marquee-track {
+    display:flex;
+    width:max-content;
+    animation:scroll-left 30s linear infinite;
+    gap:48px;
+  }
+  .marquee-track span {
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--accent);
+    white-space:nowrap;
+  }
+  .marquee-track .sep {
+    color:var(--accent-glow);
+    opacity:0.4;
+  }
+  @keyframes scroll-left {
+    0%   { transform:translateX(0); }
+    100% { transform:translateX(-50%); }
+  }
+
+  /* ── SECTIONS ────────────────────── */
+  section {
+    padding:52px 0 0;
+    border-bottom:1px solid var(--border);
+    padding-bottom:44px;
+  }
+  section:last-child { border-bottom:none; }
+  .sec-tag {
+    display:inline-block;
+    background:var(--accent-soft);
+    color:var(--accent2);
+    padding:4px 12px;
+    border-radius:4px;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .sec-tag.warn { background:var(--warning-soft); color:var(--warning); }
+  .sec-tag.danger { background:var(--danger-soft); color:var(--danger); }
+  .sec-tag.success { background:var(--success-soft); color:var(--success); }
+  h2 {
+    font-size:27px;
+    font-weight:800;
+    color:var(--text);
+    line-height:1.2;
+    letter-spacing:-0.5px;
+    margin-bottom:10px;
+  }
+  .sec-intro {
+    font-size:15.5px;
+    color:var(--text-muted);
+    max-width:640px;
+    margin-bottom:28px;
+    line-height:1.7;
+  }
+  p { margin-bottom:14px; }
+  p:last-child { margin-bottom:0; }
+
+  /* ── CARDS ────────────────────────── */
+  .card-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:8px;
+  }
+  .card {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px;
+  }
+  .card h4 {
+    font-size:14px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .card p {
+    font-size:13px;
+    color:var(--text-muted);
+    margin:0;
+    line-height:1.6;
+  }
+  .card-icon {
+    font-size:22px;
+    margin-bottom:10px;
+    display:block;
+  }
+  .card.accent-border { border-left:3px solid var(--accent); }
+
+  /* ── STAT BLOCKS ─────────────────── */
+  .stat-row {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+    margin-top:8px;
+  }
+  .stat-block {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:22px 18px;
+    text-align:center;
+  }
+  .stat-block .stat-val {
+    font-size:32px;
+    font-weight:900;
+    color:var(--accent2);
+    display:block;
+    line-height:1;
+    margin-bottom:6px;
+    font-family:var(--mono);
+  }
+  .stat-block .stat-label {
+    font-size:12px;
+    color:var(--text-muted);
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+
+  /* ── LEAK MAP TABLE ───────────────── */
+  .leak-table {
+    width:100%;
+    border-collapse:collapse;
+    margin-top:4px;
+    font-size:13.5px;
+  }
+  .leak-table th {
+    text-align:left;
+    padding:10px 14px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--border);
+    background:var(--bg3);
+  }
+  .leak-table td {
+    padding:12px 14px;
+    border-bottom:1px solid var(--border);
+    color:var(--text);
+    vertical-align:top;
+    line-height:1.5;
+  }
+  .leak-table tr:last-child td { border-bottom:none; }
+  .leak-table td.sev { font-size:16px; text-align:center; }
+
+  /* ── COMPETITOR TABLE ─────────────── */
+  .comp-table {
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    margin-top:4px;
+  }
+  .comp-table th {
+    text-align:left;
+    padding:10px 12px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--border);
+    background:var(--bg3);
+  }
+  .comp-table td {
+    padding:11px 12px;
+    border-bottom:1px solid var(--border);
+    color:var(--text-muted);
+    vertical-align:top;
+    line-height:1.5;
+  }
+  .comp-table tr:last-child td { border-bottom:none; }
+  .comp-table .company-name { color:var(--text); font-weight:600; }
+  .comp-table .win { color:var(--success); font-size:12px; font-weight:600; }
+  .badge {
+    display:inline-block;
+    padding:2px 8px;
+    border-radius:4px;
+    font-size:10.5px;
+    font-weight:700;
+  }
+  .badge-funded { background:rgba(201,162,39,0.12); color:var(--accent2); }
+  .badge-gap { background:var(--success-soft); color:var(--success); }
+
+  /* ── PSS BADGE ───────────────────── */
+  .pss-badge {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--accent-soft);
+    border:1px solid var(--accent-glow);
+    border-radius:8px;
+    padding:6px 14px;
+    font-size:12px;
+    font-weight:700;
+    color:var(--accent2);
+    margin-bottom:12px;
+  }
+  .pss-badge .score {
+    font-size:18px;
+    font-weight:900;
+    font-family:var(--mono);
+  }
+
+  /* ── EMAIL SAMPLES ───────────────── */
+  .email-sample {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:10px;
+    margin-bottom:24px;
+    overflow:hidden;
+  }
+  .email-header {
+    background:var(--bg4);
+    padding:14px 20px;
+    border-bottom:1px solid var(--border);
+  }
+  .email-header .subject-line {
+    font-size:14px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .email-meta {
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .email-meta span {
+    font-size:11.5px;
+    color:var(--text-muted);
+  }
+  .email-meta .angle-tag {
+    background:var(--accent-soft);
+    color:var(--accent2);
+    padding:1px 8px;
+    border-radius:4px;
+    font-weight:700;
+    font-size:10.5px;
+    text-transform:uppercase;
+  }
+  .email-body {
+    padding:20px;
+    font-size:14px;
+    line-height:1.8;
+    color:var(--text);
+    white-space:pre-line;
+  }
+
+  /* ── TIMELINE ─────────────────────── */
+  .timeline {
+    position:relative;
+    padding-left:28px;
+    margin-top:8px;
+  }
+  .timeline::before {
+    content:'';
+    position:absolute;
+    left:8px; top:6px; bottom:6px;
+    width:2px;
+    background:var(--border);
+  }
+  .timeline-item {
+    position:relative;
+    margin-bottom:28px;
+  }
+  .timeline-item::before {
+    content:'';
+    position:absolute;
+    left:-24px; top:6px;
+    width:10px; height:10px;
+    border-radius:50%;
+    background:var(--accent);
+    border:2px solid var(--bg);
+    z-index:1;
+  }
+  .timeline-item h4 {
+    font-size:15px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .timeline-item p {
+    font-size:13.5px;
+    color:var(--text-muted);
+    margin:0;
+    line-height:1.6;
+  }
+  .timeline-item .t-period {
+    display:inline-block;
+    background:var(--accent-soft);
+    color:var(--accent2);
+    padding:2px 10px;
+    border-radius:4px;
+    font-size:10.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    margin-bottom:8px;
+  }
+
+  /* ── GROWTH LOOPS ─────────────────── */
+  .loop-card {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:16px;
+    position:relative;
+    overflow:hidden;
+  }
+  .loop-card::before {
+    content:'';
+    position:absolute;
+    top:0; left:0;
+    width:3px; height:100%;
+    background:var(--accent);
+  }
+  .loop-card h4 {
+    font-size:15px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:8px;
+  }
+  .loop-card p {
+    font-size:13.5px;
+    color:var(--text-muted);
+    margin:0;
+    line-height:1.6;
+  }
+  .loop-steps {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
+  }
+  .loop-step {
+    background:var(--bg4);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:4px 12px;
+    font-size:12px;
+    color:var(--text-muted);
+    font-weight:500;
+  }
+  .loop-step.highlight {
+    background:var(--accent-soft);
+    color:var(--accent2);
+    border-color:var(--accent-glow);
+    font-weight:700;
+  }
+
+  /* ── PLAYBOOK TABLE ──────────────── */
+  .playbook-table {
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    margin-top:4px;
+  }
+  .playbook-table th {
+    text-align:left;
+    padding:10px 12px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--border);
+    background:var(--bg3);
+  }
+  .playbook-table td {
+    padding:11px 12px;
+    border-bottom:1px solid var(--border);
+    color:var(--text-muted);
+    vertical-align:top;
+    line-height:1.5;
+    font-size:13px;
+  }
+  .playbook-table tr:last-child td { border-bottom:none; }
+  .playbook-table .week-label {
+    font-weight:700;
+    color:var(--accent2);
+    white-space:nowrap;
+    font-size:12px;
+  }
+  .playbook-table .deliverable {
+    color:var(--text);
+    font-weight:500;
+  }
+
+  /* ── CTA BLOCK ───────────────────── */
+  .cta-block {
+    background:linear-gradient(135deg, #1a1408 0%, #2a200a 100%);
+    border:1px solid var(--accent-glow);
+    border-radius:12px;
+    padding:36px 40px;
+    text-align:center;
+  }
+  .cta-block h3 {
+    font-size:22px;
+    font-weight:800;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+  .cta-block p {
+    font-size:15px;
+    color:var(--text-muted);
+    margin-bottom:24px;
+    max-width:480px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .btn-primary {
+    display:inline-block;
+    background:var(--accent);
+    color:#0a0a0f;
+    padding:13px 32px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:800;
+    text-decoration:none;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    transition:background 0.15s;
+  }
+  .btn-primary:hover { background:var(--accent2); }
+
+  /* ── LEAD TABLE ───────────────────── */
+  .lead-table {
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    margin-top:4px;
+  }
+  .lead-table th {
+    text-align:left;
+    padding:10px 12px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--border);
+    background:var(--bg3);
+  }
+  .lead-table td {
+    padding:11px 12px;
+    border-bottom:1px solid var(--border);
+    color:var(--text-muted);
+    vertical-align:top;
+    line-height:1.5;
+  }
+  .lead-table tr:last-child td { border-bottom:none; }
+  .lead-table .firm-name { color:var(--text); font-weight:600; }
+  .tier-badge {
+    display:inline-block;
+    padding:2px 8px;
+    border-radius:4px;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+  }
+  .tier-1 { background:var(--accent-soft); color:var(--accent2); }
+  .tier-2 { background:var(--bg4); color:var(--text-muted); }
+
+  /* ── CAL EMBED ─────────────────────── */
+  .cal-embed {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:24px;
+    text-align:center;
+    margin-top:16px;
+  }
+  .cal-embed a {
+    display:inline-block;
+    background:var(--accent);
+    color:#0a0a0f;
+    padding:12px 28px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:800;
+    text-decoration:none;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    transition:background 0.15s;
+  }
+  .cal-embed a:hover { background:var(--accent2); }
+  .cal-embed p {
+    font-size:13px;
+    color:var(--text-muted);
+    margin-top:10px;
+    margin-bottom:0;
+  }
+
+  /* ── GUARANTEE ─────────────────────── */
+  .guarantee-box {
+    background:var(--bg3);
+    border:1px solid rgba(34,197,94,0.2);
+    border-radius:10px;
+    padding:24px;
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    margin-top:16px;
+  }
+  .guarantee-box .g-icon {
+    font-size:28px;
+    flex-shrink:0;
+  }
+  .guarantee-box h4 {
+    font-size:15px;
+    font-weight:700;
+    color:var(--success);
+    margin-bottom:6px;
+  }
+  .guarantee-box p {
+    font-size:13.5px;
+    color:var(--text-muted);
+    margin:0;
+    line-height:1.6;
+  }
+
+  /* ── SCROLL REVEAL ─────────────────── */
+  .reveal {
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.visible {
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ── RESPONSIVE ─────────────────────── */
+  @media (max-width: 900px) {
+    #sidebar { display:none; }
+    #main { margin-left:0; padding:0 24px 80px; }
+    .card-grid, .stat-row { grid-template-columns:1fr; }
+    h2 { font-size:22px; }
+    #hero h1 { font-size:28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <div class="company">Executa</div>
+    <div class="for-line">Revenue Infrastructure Package</div>
+    <div class="for-line" style="margin-top:6px;color:var(--text-dim);font-size:10px;">Prepared by Jean Mundabi Fala · MDB Growth Capital</div>
+  </div>
+  <nav>
+    <div class="nav-group-label">Overview</div>
+    <a href="#hero">Package Overview</a>
+    <a href="#context">The Situation</a>
+
+    <div class="nav-group-label">Intelligence</div>
+    <a href="#audit">Funnel Audit</a>
+    <a href="#competition">Competitor Landscape</a>
+    <a href="#leads">Lead List — 28 Firms</a>
+
+    <div class="nav-group-label">Campaign</div>
+    <a href="#email-sequences">Email Sequences</a>
+    <a href="#playbook">90-Day GTM Plan</a>
+    <a href="#results">Results Timeline</a>
+
+    <div class="nav-group-label">Infrastructure</div>
+    <a href="#growth-loops">Growth Feedback Loops</a>
+    <a href="#commercial">Commercial Model</a>
+    <a href="#next-step">Next Step</a>
+  </nav>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+  <!-- HERO -->
+  <section id="hero" style="border-bottom:1px solid var(--border);padding-bottom:44px;">
+    <div class="hero-tag">MDB Growth Capital · BD Package · 2026-05-18</div>
+    <h1>The 200 PE and M&A Firms<br><span>That Don't Know Executa Exists</span></h1>
+    <p class="hero-sub">
+      Mathew, this package was built before you asked for it. What follows is a research-backed analysis of Executa's distribution gap — and an exact plan to close it with the mid-market PE and M&A advisory segment that Rogo is not calling.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="label">Prepared for</span>
+        <span class="val">Mathew, Co-founder</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Firms Mapped</span>
+        <span class="val">28 Verified</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">ARR Opportunity</span>
+        <span class="val">£150K–£450K</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Window</span>
+        <span class="val">Now — Q3 2026</span>
+      </div>
+    </div>
+
+    <!-- VIDEO PLACEHOLDER -->
+    <div class="video-placeholder">
+      <span class="vp-icon">▶</span>
+      <p style="font-weight:700;color:var(--text);margin-bottom:4px;">VIDEO_URL_GOES_HERE</p>
+      <p>Jean walks through the 28 firms, the distribution gap, and what the 90-day programme looks like for Executa.</p>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Jefferies</span><span class="sep">·</span>
+      <span>Lazard</span><span class="sep">·</span>
+      <span>Rothschild</span><span class="sep">·</span>
+      <span>Mid-Market PE</span><span class="sep">·</span>
+      <span>IC Memo in 40 Minutes</span><span class="sep">·</span>
+      <span>LBO in 3 Minutes</span><span class="sep">·</span>
+      <span>200 Firms in the Window</span><span class="sep">·</span>
+      <span>Rogo: $160M Series D</span><span class="sep">·</span>
+      <span>Boutique Advisory</span><span class="sep">·</span>
+      <span>Deal Velocity</span><span class="sep">·</span>
+      <span>Forward Deployed Engineering</span><span class="sep">·</span>
+      <span>Jefferies</span><span class="sep">·</span>
+      <span>Lazard</span><span class="sep">·</span>
+      <span>Rothschild</span><span class="sep">·</span>
+      <span>Mid-Market PE</span><span class="sep">·</span>
+      <span>IC Memo in 40 Minutes</span><span class="sep">·</span>
+      <span>LBO in 3 Minutes</span><span class="sep">·</span>
+      <span>200 Firms in the Window</span><span class="sep">·</span>
+      <span>Rogo: $160M Series D</span><span class="sep">·</span>
+      <span>Boutique Advisory</span><span class="sep">·</span>
+      <span>Deal Velocity</span><span class="sep">·</span>
+      <span>Forward Deployed Engineering</span><span class="sep">·</span>
+    </div>
+  </div>
+
+  <!-- THE SITUATION -->
+  <section id="context" class="reveal">
+    <div class="sec-tag">The Situation</div>
+    <h2>What Executa Has Built — and Where Growth Stops</h2>
+    <p class="sec-intro">IC memos in 40 minutes. LBO models in 3 minutes. EY, Deloitte, KPMG already using it. The product is not the problem.</p>
+
+    <div class="stat-row">
+      <div class="stat-block">
+        <span class="stat-val">10+</span>
+        <span class="stat-label">Named Clients (all boutique tier)</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-val">£0</span>
+        <span class="stat-label">Systematic Outbound Running</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-val">200+</span>
+        <span class="stat-label">Firms That Should Know Executa</span>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;">
+      <p>Executa built to this point on referrals from advisory and credit contacts. Ashcroft Partners, Whitcombe and Bell, Ravensford Capital, Hartley Linden — boutique UK firms that the founding team knew personally from previous roles in advisory, PE, and credit.</p>
+      <p>That model has a ceiling. The JD for B2B Sales Growth said it plainly: <strong style="color:var(--text);">"No sales manager, no marketing team, no SDR layer."</strong> The co-founders have been doing all commercial work through personal network. The network is saturating at boutique level.</p>
+      <p>The mid-market PE and boutique M&A advisory universe — 200 to 300 firms across the UK and Europe — is not receiving any systematic outreach from Executa. Those firms are not finding Executa through Google (no SEO). Not through LinkedIn (no posts in 90 days). Not through cold outreach (no SDR layer until the new hire).</p>
+      <p>Rogo raised $160 million in May 2026 and is accelerating its enterprise programme. The firms that will shortlist a deal workflow AI vendor in Q3 2026 are making that decision now.</p>
+    </div>
+
+    <div class="card-grid" style="margin-top:24px;">
+      <div class="card accent-border">
+        <span class="card-icon">🔴</span>
+        <h4>The Distribution Gap</h4>
+        <p>Zero systematic way to reach 200 target firms. No inbound. No content. No outbound programme. Founder network saturating at boutique tier.</p>
+      </div>
+      <div class="card accent-border">
+        <span class="card-icon">⏱</span>
+        <h4>The Window</h4>
+        <p>New commercial hire is 4 to 8 weeks in. The 60 to 90 days before they produce pipeline is the window. Rogo is in those conversations now.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <h4>The Opportunity</h4>
+        <p>Mid-market PE and boutique M&A advisory — 200 to 300 firms — is unclaimed. Rogo targets Jefferies. Executa can own the segment below.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💰</span>
+        <h4>The Revenue Math</h4>
+        <p>ACV: £30,000 to £90,000 per firm per year. Five boutique advisory or PE firm wins = £150,000 or more in new ARR. At 10 percent segment penetration: £1M to £4M ARR.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIT / LEAK MAP -->
+  <section id="audit" class="reveal">
+    <div class="sec-tag danger">Funnel Audit</div>
+    <h2>Leak Map — Where the Pipeline Breaks</h2>
+    <p class="sec-intro">Every stage of Executa's acquisition funnel has a specific failure point. Here is where the pipeline leaks and what MDB installs to fix each one.</p>
+
+    <table class="leak-table">
+      <thead>
+        <tr>
+          <th>Stage</th>
+          <th>What Breaks</th>
+          <th>Severity</th>
+          <th>MDB Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Top of Funnel — Reach</strong></td>
+          <td>No systematic way to reach 200 target firms. Zero ads, zero content, zero outbound. Growth entirely through founder introductions.</td>
+          <td class="sev">🔴</td>
+          <td>Account-based targeting programme. 200 named firms, verified decision-makers, buying signal mapping. Installed in 30 days.</td>
+        </tr>
+        <tr>
+          <td><strong>Top of Funnel — Awareness</strong></td>
+          <td>Target firms do not know Executa exists. No LinkedIn presence (zero posts in 90 days). No Google ranking for "AI for LBO model" or "institutional AI for investment banking."</td>
+          <td class="sev">🔴</td>
+          <td>Outbound sequences personalised to firm's deal focus. Authority Engine: LinkedIn content flywheel, 20-week nurture sequence. Compounding inbound over 6 to 18 months.</td>
+        </tr>
+        <tr>
+          <td><strong>Mid Funnel — Trust</strong></td>
+          <td>No published case studies with named outcomes. PE Partners evaluating AI make decisions through peer trust. They need a named case study from a firm they recognise.</td>
+          <td class="sev">🟡</td>
+          <td>Two named case studies developed from existing clients (EY, Ravensford Capital, or Hartley Linden) with time-saving metrics and deal velocity data.</td>
+        </tr>
+        <tr>
+          <td><strong>Mid Funnel — Social Proof</strong></td>
+          <td>No peer reference programme. A PE Partner who wants to evaluate Executa has no way to speak to a GP or MD who has used it on a live deal.</td>
+          <td class="sev">🟡</td>
+          <td>Reference call programme from existing client base. One structured reference call per high-intent prospect. 40 percent higher close rate at boutique tier.</td>
+        </tr>
+        <tr>
+          <td><strong>Bottom Funnel — Referral</strong></td>
+          <td>No structured referral trigger post-onboarding. Forward Deployed Engineering creates deep client relationships — but no system converts those relationships into introductions.</td>
+          <td class="sev">🟠</td>
+          <td>30-day post-onboarding referral sequence. Each onboarded client introduces Executa to 2 to 3 peers in their network.</td>
+        </tr>
+        <tr>
+          <td><strong>Top Funnel — Inbound</strong></td>
+          <td>No SEO, no content, no LinkedIn presence. Google ranking for any deal workflow AI search term: zero visibility for Executa.</td>
+          <td class="sev">🟡</td>
+          <td>Authority Engine: 18-month compounding trust machine. LinkedIn posts PE Partners save and share. 20-week value-only nurture. Micro-budget retargeting on LinkedIn.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- COMPETITION -->
+  <section id="competition" class="reveal">
+    <div class="sec-tag warn">Competitor Landscape</div>
+    <h2>How Executa Compares — and Where It Wins</h2>
+    <p class="sec-intro">Rogo has $160M and Jefferies. Hebbia has $130M and large PE. The mid-market PE and boutique M&A advisory segment — 200 to 300 firms — has no clear leader yet.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Competitor</th>
+          <th>Position</th>
+          <th>Funding</th>
+          <th>Weakness vs Executa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="company-name">Rogo</td>
+          <td>AI operating system for investment banking. 250+ institutions. Jefferies, Lazard, Rothschild.</td>
+          <td><span class="badge badge-funded">Series D · $160M</span></td>
+          <td class="win">Research-focused. Less strong on document production inside the firm's own methodology. Targets bulge bracket — not the 200-firm mid-market.</td>
+        </tr>
+        <tr>
+          <td class="company-name">Hebbia</td>
+          <td>AI for investment research and document analysis. Large PE adoption.</td>
+          <td><span class="badge badge-funded">Series B · $130M</span></td>
+          <td class="win">Search and knowledge retrieval only — not workflow automation. $10K per seat per year. Generic AI output, not methodology-encoded.</td>
+        </tr>
+        <tr>
+          <td class="company-name">Model ML</td>
+          <td>PE and IB deal workflow AI. GTM Lead JD live May 2026.</td>
+          <td><span class="badge badge-funded">Series A · $75M</span></td>
+          <td class="win">Direct competitor, further along commercially. Executa's edge: encoded methodology + Forward Deployed Engineering. Model ML has no equivalent.</td>
+        </tr>
+        <tr>
+          <td class="company-name">Harvey AI</td>
+          <td>AI for professional services including finance.</td>
+          <td><span class="badge badge-funded">$300M raised</span></td>
+          <td class="win">Primarily legal. Finance is secondary. No financial domain model. No deal-specific outputs (LBO, IC memo, CIM).</td>
+        </tr>
+        <tr>
+          <td class="company-name">Manual Excel + Analyst</td>
+          <td>The incumbent at every boutique and mid-market firm.</td>
+          <td>—</td>
+          <td class="win">IC memo: 15 to 40 hours. LBO model: 4 to 8 hours. Executa: IC memo in 40 minutes. LBO in 3 minutes. The ROI case is self-evident once someone sees a demo.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card-grid" style="margin-top:20px;">
+      <div class="card">
+        <h4>Executa's Unfair Advantage</h4>
+        <p style="margin-bottom:10px;">Two things no competitor offers:</p>
+        <p style="margin-bottom:6px;"><strong style="color:var(--accent2);">1. Encoded Methodology</strong> — The firm's own IC memo standards, language, and format baked into every output. Not generic AI text. The partner who reads it thinks their analyst wrote it.</p>
+        <p><strong style="color:var(--accent2);">2. Forward Deployed Engineering</strong> — Engineers embed with the client for two weeks during onboarding. Every workflow is customised before go-live. Boutique advisory firms get enterprise-grade integration without an IT team.</p>
+      </div>
+      <div class="card">
+        <h4>Why the Mid-Market Window Is Open</h4>
+        <p>Rogo's $160M Series D accelerates their enterprise programme. Tier 1 banks (Jefferies, Lazard, Rothschild) will default to Rogo within 12 months. That leaves the 200+ boutique advisory and mid-market PE firms as the unclaimed segment.</p>
+        <p style="margin-top:10px;">The firms that say no to Rogo — because they want methodology-encoded output, not a generic platform — are Executa's warmest prospects. They exist right now.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD LIST -->
+  <section id="leads" class="reveal">
+    <div class="sec-tag success">Free Deliverable</div>
+    <h2>28 Verified PE and M&A Firms — Ready to Send</h2>
+    <p class="sec-intro">Jean has already built the first version of Executa's target account list. 28 UK boutique M&A advisory firms and mid-market PE funds. Every entry includes target title, buying signal, and contact format.</p>
+
+    <div style="margin-bottom:16px;">
+      <span class="tier-badge tier-1">Tier 1 — Boutique M&A Advisory</span>
+      <span style="font-size:13px;color:var(--text-muted);margin-left:10px;">14 firms · Managing Director and Partner targets</span>
+    </div>
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th>Firm</th>
+          <th>Focus</th>
+          <th>Buying Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="firm-name">Bishopsgate Corporate Finance</td><td>Mid-market M&A</td><td>Active mandate flow, analyst hiring signals</td></tr>
+        <tr><td class="firm-name">GP Bullhound</td><td>Technology M&A</td><td>High deal velocity, senior analyst team</td></tr>
+        <tr><td class="firm-name">Cavendish Corporate Finance</td><td>Mid-market advisory</td><td>Regular CIM production, active LinkedIn</td></tr>
+        <tr><td class="firm-name">MCF Corporate Finance</td><td>Manufacturing M&A</td><td>Sector-specific IC memo volume</td></tr>
+        <tr><td class="firm-name">Thomas Scott and Co</td><td>Debt advisory</td><td>Multi-mandate operation, small team</td></tr>
+        <tr><td class="firm-name">Clairfield UK</td><td>Cross-border M&A</td><td>Pan-European mandate flow</td></tr>
+        <tr><td class="firm-name">Arkwright Corporate Finance</td><td>Lower mid-market</td><td>High-volume screening, boutique team</td></tr>
+        <tr><td class="firm-name">Novistra Capital</td><td>Growth equity advisory</td><td>Analyst-heavy operation</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:20px;margin-bottom:16px;">
+      <span class="tier-badge tier-2">Tier 2 — Mid-Market PE Funds</span>
+      <span style="font-size:13px;color:var(--text-muted);margin-left:10px;">14 firms · Partner and Investment Director targets</span>
+    </div>
+    <table class="lead-table">
+      <thead>
+        <tr>
+          <th>Fund</th>
+          <th>AUM / Focus</th>
+          <th>Buying Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="firm-name">Sovereign Capital Partners</td><td>£300M–£500M · PE buyout</td><td>Active portfolio, quarterly LP reports</td></tr>
+        <tr><td class="firm-name">Limerston Capital</td><td>£200M+ · Lower mid-market</td><td>High deal screen volume</td></tr>
+        <tr><td class="firm-name">WestBridge Capital</td><td>£300M · Growth PE</td><td>Analyst hiring signals, active deals</td></tr>
+        <tr><td class="firm-name">Inflexion Private Equity</td><td>£1B+ · Mid-market</td><td>Large deal team, IC memo volume</td></tr>
+        <tr><td class="firm-name">NVM Private Equity</td><td>£200M · Northern England focus</td><td>Regional boutique, high mandate density</td></tr>
+        <tr><td class="firm-name">Growth Capital Partners</td><td>£150M+ · Growth equity</td><td>Active portfolio monitoring need</td></tr>
+        <tr><td class="firm-name">Bridgepoint Europe</td><td>€6B+ · European mid-market</td><td>Large deal team, multi-jurisdiction IC memos</td></tr>
+        <tr><td class="firm-name">IK Partners UK</td><td>€10B+ · European PE</td><td>High-volume screening, enterprise-scale need</td></tr>
+      </tbody>
+    </table>
+
+    <div style="background:var(--accent-soft);border:1px solid var(--accent-glow);border-radius:10px;padding:20px;margin-top:20px;">
+      <p style="font-size:14px;color:var(--text);font-weight:600;margin-bottom:6px;">Full list: 28 firms with decision-maker contacts, email formats, LinkedIn profiles, and buying signal notes.</p>
+      <p style="font-size:13px;color:var(--text-muted);margin:0;">Reply to Jean's email and the complete list comes over immediately. Every firm verified as of May 2026.</p>
+    </div>
+  </section>
+
+  <!-- EMAIL SEQUENCES -->
+  <section id="email-sequences" class="reveal">
+    <div class="sec-tag">Email Sequences</div>
+    <h2>Two PSS-Scored Cold Emails — Ready to Deploy</h2>
+    <p class="sec-intro">Both emails have been through a five-iteration process: framework assembly, language audit, rhythm audit, person intelligence check, and PSS scoring. Neither is a template. Both are built specifically for Mathew at Executa.</p>
+
+    <!-- Email 1 -->
+    <div class="pss-badge">
+      <span>PSS Score</span>
+      <span class="score">88</span>
+      <span>/ 100 · Email 1 · Trigger Angle</span>
+    </div>
+    <div class="email-sample">
+      <div class="email-header">
+        <div class="subject-line">Subject: Jefferies. Lazard. Rothschild.</div>
+        <div class="email-meta">
+          <span>Day 0</span>
+          <span class="angle-tag">Trigger</span>
+          <span>91 words</span>
+          <span>CTA: Delivery ("I can send the list over.")</span>
+        </div>
+      </div>
+      <div class="email-body">Mathew,
+
+Executa built to this point on referrals from advisory and credit contacts. That model has a ceiling.
+
+The risk is that PE Partners and M&A MDs shortlist a deal workflow AI vendor before your hire finishes building the list.
+
+We help you reach named deal professionals already evaluating workflow tools — before that shortlist forms.
+
+Five advisory or PE firm wins at that deal size can mean £150,000 or more in new ARR.
+
+We handle the account research, outreach, and qualification so your team stays focused on commercial conversations.
+
+I can send the list over.
+
+Jean</div>
+    </div>
+
+    <!-- Email 2 -->
+    <div class="pss-badge">
+      <span>PSS Score</span>
+      <span class="score">85</span>
+      <span>/ 100 · Email 2 · Friction Angle</span>
+    </div>
+    <div class="email-sample">
+      <div class="email-header">
+        <div class="subject-line">Subject: The 200 firms Rogo is not calling.</div>
+        <div class="email-meta">
+          <span>Day 3</span>
+          <span class="angle-tag">Friction</span>
+          <span>99 words</span>
+          <span>CTA: Question</span>
+        </div>
+      </div>
+      <div class="email-body">Mathew,
+
+Rogo raised $160 million and went directly for Jefferies, Lazard, and Rothschild. Bulge bracket. Enterprise motion. That market is spoken for.
+
+The mid-market is not. Two hundred boutique M&A advisory and PE firms in the UK and Europe are evaluating deal workflow AI without a clear leader.
+
+They cannot find Executa because Executa is not reaching them.
+
+The accounts comparing platforms now will not be back in evaluation mode for 12 months.
+
+We handle the account research, outreach, and qualification so your team enters those conversations first.
+
+Worth showing you how we'd approach this for Executa?
+
+Jean</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>Why These Two Angles</h4>
+        <p><strong style="color:var(--accent2);">Email 1 (Trigger):</strong> The new commercial hire window. Timed to Executa's current stage transition from founder-led sales. Every day without a target account list is a day the hire builds from scratch while Rogo runs ABM.</p>
+      </div>
+      <div class="card">
+        <h4>Sequence Architecture</h4>
+        <p><strong style="color:var(--accent2);">Day 0:</strong> Email 1 Trigger — "I can send the list over."<br><strong style="color:var(--accent2);">Day 1:</strong> LinkedIn connect request.<br><strong style="color:var(--accent2);">Day 3:</strong> Email 2 Friction — "The 200 firms Rogo is not calling."<br><strong style="color:var(--accent2);">Day 5:</strong> LinkedIn follow-up DM.<br><strong style="color:var(--accent2);">Day 8:</strong> LinkedIn breakup message.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 90-DAY PLAYBOOK -->
+  <section id="playbook" class="reveal">
+    <div class="sec-tag">90-Day GTM Plan</div>
+    <h2>What MDB Builds — Week by Week</h2>
+    <p class="sec-intro">This is not a campaign. It is the commercial infrastructure Executa needs to reach 200 mid-market PE and advisory firms systematically. Here is what gets built and when.</p>
+
+    <table class="playbook-table">
+      <thead>
+        <tr>
+          <th style="width:100px;">Period</th>
+          <th>Deliverable</th>
+          <th>Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="week-label">Week 1–2</td>
+          <td class="deliverable">ICP definition and 200-firm target account universe</td>
+          <td>Named firms, verified Partners and MDs, ICP scores, buying signal mapping (analyst hiring = live deal flow proxy)</td>
+        </tr>
+        <tr>
+          <td class="week-label">Week 2–3</td>
+          <td class="deliverable">Outbound sequences built and live</td>
+          <td>2 to 3 personalised email sequences (Trigger + Friction angles). LinkedIn outreach sequence for Mathew's profile. HubSpot campaign tracking set up.</td>
+        </tr>
+        <tr>
+          <td class="week-label">Week 3–4</td>
+          <td class="deliverable">Qualification layer installed</td>
+          <td>First replies screened for genuine intent. Qualified conversations handed to Mathew or new sales hire. Reply-to-demo conversion tracked.</td>
+        </tr>
+        <tr>
+          <td class="week-label">Month 2</td>
+          <td class="deliverable">Sequence refinement and scale</td>
+          <td>Top-performing variants scaled to next 50 firms. Winning opening line identified from reply data. Targeting improved from every reply. 20 to 30 conversations in progress.</td>
+        </tr>
+        <tr>
+          <td class="week-label">Month 3</td>
+          <td class="deliverable">Pipeline and referral programme</td>
+          <td>3 to 5 signed pilots from outbound programme. First named case study from new client cohort. 30-day post-onboarding referral trigger activated for existing client base.</td>
+        </tr>
+        <tr>
+          <td class="week-label">Ongoing</td>
+          <td class="deliverable">Authority Engine activated (if recommended)</td>
+          <td>LinkedIn content flywheel: 2 to 3 posts per week. 20-week value-only nurture sequence. Micro-budget LinkedIn retargeting (£500 to £1K/month). Lead scoring: cold / warm / hot buckets wired into HubSpot.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card-grid" style="margin-top:20px;">
+      <div class="card">
+        <h4>MDB Installs — Not Campaigns</h4>
+        <p>A campaign ends when the budget runs out. What MDB builds is permanent. Named account database. Outbound playbook. HubSpot pipeline. LinkedIn content strategy. Qualification criteria. The sales hire inherits a working system — not a standing start.</p>
+      </div>
+      <div class="card">
+        <h4>The Authority Engine (Score: 6/7)</h4>
+        <p>PE Partners and M&A MDs make vendor decisions through peer trust. Executa has zero content presence — no blog, no posts in 90 days, no benchmark reports. The Authority Engine builds the compounding trust machine that converts the 95 percent not-ready market into an 18-month pipeline.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="reveal">
+    <div class="sec-tag success">Results Timeline</div>
+    <h2>What a 90-Day Programme Produces</h2>
+    <p class="sec-intro">These projections are based on MDB's previous pipeline programmes for B2B fintech and professional services companies at the same stage as Executa.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-period">30 Days</div>
+        <h4>Named account list built. First replies in.</h4>
+        <p>200-firm target universe with verified Partners and MDs. 2 to 3 email sequences live. First 10 to 20 replies from qualified PE Partners and M&A MDs. 3 to 5 demos booked from the first wave of outreach.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-period">60 Days</div>
+        <h4>20 to 30 qualified conversations completed.</h4>
+        <p>5 to 10 live demos with mid-market PE Partners and boutique M&A MDs. 2 to 3 conversations progressing to pilot stage. LinkedIn presence established — Mathew posting 2 to 3 times per week on deal workflow intelligence.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-period">90 Days</div>
+        <h4>3 to 5 signed pilots. £150K–£450K ARR in process.</h4>
+        <p>First named case study from new client cohort. Referral programme triggered from existing client base. Pipeline: £150,000 to £450,000 in new ARR contracts signed or in negotiation.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-period">6 Months</div>
+        <h4>Outbound channel running independently.</h4>
+        <p>10 to 20 active clients from systematic outbound in addition to existing boutique base. First LATAM conversations beginning. Authority Engine compounding — LinkedIn inbound from PE Partners, content downloads, conference pipeline from SuperReturn and IPEM Paris.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROWTH LOOPS -->
+  <section id="growth-loops" class="reveal">
+    <div class="sec-tag">Growth Feedback Loops</div>
+    <h2>Three Compounding Mechanisms</h2>
+    <p class="sec-intro">Each loop is self-reinforcing. The more clients Executa wins through the outbound programme, the more each loop compounds. None of this requires a larger team — it requires the right infrastructure.</p>
+
+    <div class="loop-card">
+      <h4>Loop 1 — Core Acquisition Loop</h4>
+      <p>Every new client from outbound introduces Executa into a new network layer. The first 10 boutique advisory clients know 50 other boutique advisory firms. The first 5 PE fund clients have co-investors at another 20 funds.</p>
+      <div class="loop-steps">
+        <span class="loop-step highlight">Outbound to PE Partners and M&A MDs</span>
+        <span class="loop-step">→ Trigger email earns reply</span>
+        <span class="loop-step">→ Reply triggers demo booking</span>
+        <span class="loop-step">→ Demo on own documents converts</span>
+        <span class="loop-step highlight">→ Forward Deployed Engineering creates value</span>
+        <span class="loop-step">→ Client introduces Executa to 2 to 3 peers</span>
+        <span class="loop-step highlight">→ Peers become new outbound targets</span>
+      </div>
+    </div>
+
+    <div class="loop-card">
+      <h4>Loop 2 — Credibility and Case Study Loop</h4>
+      <p>New client onboards → 30-day check-in produces first results metrics (hours saved, deal velocity improvement) → Results become a case study → Case study converts the next wave of outbound → Case study shared at SuperReturn or IPEM converts conference pipeline → Conference pipeline becomes new client cohort → New cohort produces new case studies.</p>
+      <div class="loop-steps">
+        <span class="loop-step">New client onboards</span>
+        <span class="loop-step highlight">→ 30-day results metrics captured</span>
+        <span class="loop-step">→ Named case study published</span>
+        <span class="loop-step highlight">→ Case study shared at SuperReturn / IPEM</span>
+        <span class="loop-step">→ Conference pipeline converts</span>
+        <span class="loop-step highlight">→ New cohort → new case studies</span>
+      </div>
+    </div>
+
+    <div class="loop-card">
+      <h4>Loop 3 — Test, Measure, Learn, Scale, Document</h4>
+      <p>Week 1: Run first 20 outbound sequences. Week 2: Measure reply rates by firm type (boutique vs PE, by deal size). Week 3: Identify the highest-converting opening line and firm type. Week 4: Scale the winning variant to the next 50 firms. Month 2: Document what worked → update ICP → improve targeting → scale to 100 firms. The system gets smarter with every reply.</p>
+      <div class="loop-steps">
+        <span class="loop-step">20 sequences launched</span>
+        <span class="loop-step highlight">→ Reply data analysed</span>
+        <span class="loop-step">→ Winning variant identified</span>
+        <span class="loop-step highlight">→ Scale to 50 firms</span>
+        <span class="loop-step">→ ICP updated</span>
+        <span class="loop-step highlight">→ Scale to 100 firms</span>
+        <span class="loop-step">→ System self-improves</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMERCIAL MODEL -->
+  <section id="commercial" class="reveal">
+    <div class="sec-tag">Commercial Model</div>
+    <h2>How MDB Works — and What the Pilot Includes</h2>
+    <p class="sec-intro">MDB is not a marketing agency. MDB builds the acquisition channel and hands it to Executa permanently. One 90-day pilot engagement. No lock-in. No retainer.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>What MDB Installs</h4>
+        <p style="margin-bottom:10px;">Everything needed to run systematic outbound to 200 PE and M&A advisory firms:</p>
+        <ul style="font-size:13px;color:var(--text-muted);padding-left:18px;line-height:2;">
+          <li>200-firm named account database with ICP scores and buying signals</li>
+          <li>2 to 3 personalised outbound sequences per ICP segment</li>
+          <li>Qualification system — cold / warm / hot buckets</li>
+          <li>LinkedIn outreach strategy for Mathew's profile</li>
+          <li>HubSpot pipeline tracking from first touch to signed contract</li>
+          <li>30-day post-engagement handover to the sales hire</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>What MDB Does Not Do</h4>
+        <p style="margin-bottom:10px;">The infrastructure handles acquisition. Executa handles conversion.</p>
+        <ul style="font-size:13px;color:var(--text-muted);padding-left:18px;line-height:2;">
+          <li>MDB does not manage the demos — Mathew and the sales hire run those</li>
+          <li>MDB does not close the deals — the product closes the deals</li>
+          <li>MDB does not replace the sales hire — MDB fills the pipeline the hire converts</li>
+          <li>MDB does not stay on forever — the system is handed over at month 3</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="guarantee-box">
+      <span class="g-icon">🛡</span>
+      <div>
+        <h4>The Guarantee</h4>
+        <p>If at the end of 90 days Executa does not have a working outbound programme — a named account list, qualified sequences, and at least 5 documented conversations with PE Partners or M&A MDs — Mathew keeps everything MDB built and pays nothing for the month it failed.</p>
+        <p style="margin-top:8px;">Five mid-market advisory or PE firm wins at £30,000 ACV = £150,000 in new ARR. The pilot investment is a fraction of that. The risk is not buying.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT STEP -->
+  <section id="next-step" class="reveal">
+    <div class="cta-block">
+      <div class="sec-tag" style="margin-bottom:16px;">Next Step</div>
+      <h3>This Package Was Built Before Anyone Asked</h3>
+      <p>If the 28 firms on the list look like the right targets — if the sequences match what Executa needs — the next step is simple. Reply to Jean's email: "Send the list over." That reply triggers a 15-minute call. Jean walks through the firms, explains the strategy, and answers any questions.</p>
+      <div class="cal-embed" style="margin-top:20px;background:transparent;border:none;padding:0;">
+        <a href="https://cal.com/jean-m-8f4kbr/15min" target="_blank">Book 15 Minutes with Jean</a>
+        <p style="margin-top:10px;font-size:12px;">Or reply to the email: "I can send the list over."</p>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);">
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7;">
+        <strong style="color:var(--text-muted);">Jean Mundabi Fala</strong> · Founder, MDB Growth Capital<br>
+        mdb.growthcapital@gmail.com · <a href="https://cal.com/jean-m-8f4kbr/15min" style="color:var(--accent2);text-decoration:none;">cal.com/jean-m-8f4kbr/15min</a>
+      </p>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">
+        Previous work: Clarasight (enterprise travel analytics, Series A), Marloo (financial advice AI, 40 percent MoM growth), Skin Analytics (NHS AI dermatology, 28 trusts), Encord (data labelling infrastructure), and others. References available on request.
+      </p>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:12px;font-style:italic;">
+        Strategy and GTM research by Jean Mundabi Fala · MDB Growth Capital · 2026
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+
+  // Active sidebar link
+  const sections = document.querySelectorAll('section[id], #hero');
+  const navLinks = document.querySelectorAll('#sidebar nav a');
+  const onScroll = () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+</body>
+</html>

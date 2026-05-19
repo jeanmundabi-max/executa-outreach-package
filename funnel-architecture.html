@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executa — Funnel Architecture · MDB Growth Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#08080f; --bg2:#0e0e1a; --bg3:#141420; --bg4:#1c1c2c;
+    --border:rgba(255,255,255,0.07);
+    --accent:#c9a227; --accent2:#e0b840;
+    --accent-soft:rgba(201,162,39,0.10); --accent-glow:rgba(201,162,39,0.20);
+    --text:#f0ede8; --text-muted:#8b8ba0; --text-dim:#4a4a60;
+    --success:#22c55e; --success-soft:rgba(34,197,94,0.10);
+    --danger:#ef4444; --danger-soft:rgba(239,68,68,0.10);
+    --warning:#f59e0b; --warning-soft:rgba(245,158,11,0.10);
+    --font:'Space Grotesk',system-ui,sans-serif;
+    --mono:'Space Mono',monospace;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.7;}
+  .container{max-width:1100px;margin:0 auto;padding:0 48px;}
+
+  header{
+    padding:20px 48px;
+    background:var(--bg2);border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .header-brand{font-size:13px;font-weight:800;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;}
+  .header-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+
+  .page-hero{padding:56px 48px 40px;max-width:1100px;margin:0 auto;}
+  .page-tag{
+    display:inline-block;
+    background:var(--accent-soft);border:1px solid var(--accent-glow);
+    color:var(--accent2);padding:5px 14px;border-radius:4px;
+    font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .page-hero h1{font-size:clamp(26px,3.5vw,42px);font-weight:800;line-height:1.15;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;}
+  .page-hero p{font-size:15px;color:var(--text-muted);max-width:620px;line-height:1.6;}
+
+  section{padding:44px 0;border-top:1px solid var(--border);}
+  h2{font-size:20px;font-weight:800;color:var(--text);letter-spacing:-0.5px;margin-bottom:8px;}
+  .sec-sub{font-size:13.5px;color:var(--text-muted);margin-bottom:24px;max-width:560px;line-height:1.6;}
+  .sec-tag{
+    display:inline-block;
+    background:var(--accent-soft);border:1px solid var(--accent-glow);
+    color:var(--accent2);padding:4px 11px;border-radius:4px;
+    font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .sec-tag.danger{background:var(--danger-soft);border-color:rgba(239,68,68,0.2);color:var(--danger);}
+  .sec-tag.success{background:var(--success-soft);border-color:rgba(34,197,94,0.2);color:var(--success);}
+
+  /* FUNNEL TABLE */
+  .funnel-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .funnel-table th{
+    text-align:left;padding:11px 16px;
+    font-size:10px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;
+    color:var(--text-dim);border-bottom:1px solid var(--border);background:var(--bg3);
+  }
+  .funnel-table td{
+    padding:14px 16px;border-bottom:1px solid var(--border);
+    color:var(--text-muted);vertical-align:top;line-height:1.55;font-size:13px;
+  }
+  .funnel-table tr:last-child td{border-bottom:none;}
+  .stage-label{
+    font-weight:800;font-size:12px;
+    display:block;margin-bottom:4px;
+  }
+  .stage-today .stage-label{color:var(--danger);}
+  .stage-after .stage-label{color:var(--success);}
+  .stage-missing .stage-label{color:var(--warning);}
+  .funnel-table .stage-col{
+    font-size:12px;font-weight:700;color:var(--accent2);
+    white-space:nowrap;
+  }
+  .badge-stage{
+    display:inline-block;padding:2px 8px;border-radius:4px;
+    font-size:10px;font-weight:700;text-transform:uppercase;
+  }
+  .bs-tofu{background:rgba(99,102,241,0.12);color:#818cf8;}
+  .bs-mofu{background:rgba(245,158,11,0.12);color:var(--warning);}
+  .bs-bofu{background:rgba(34,197,94,0.10);color:var(--success);}
+  .bs-sale{background:var(--accent-soft);color:var(--accent2);}
+
+  /* GROWTH LOOPS */
+  .loop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .loop-card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+    padding:24px;position:relative;overflow:hidden;
+  }
+  .loop-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);
+  }
+  .loop-num{
+    font-size:28px;font-weight:900;color:var(--accent);opacity:0.2;
+    font-family:var(--mono);line-height:1;margin-bottom:8px;
+  }
+  .loop-card h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px;}
+  .loop-card p{font-size:13px;color:var(--text-muted);line-height:1.6;margin:0;}
+  .loop-steps{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+  .ls{
+    background:var(--bg3);border:1px solid var(--border);border-radius:5px;
+    padding:3px 9px;font-size:11px;color:var(--text-muted);
+  }
+  .ls.h{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent2);font-weight:700;}
+
+  /* MISSING LAYER CARDS */
+  .missing-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .missing-card{
+    background:var(--bg2);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:20px;
+  }
+  .missing-card h4{font-size:13px;font-weight:700;color:var(--danger);margin-bottom:6px;}
+  .missing-card p{font-size:13px;color:var(--text-muted);line-height:1.5;margin:0;}
+
+  @media(max-width:768px){
+    .container,.page-hero,header{padding-left:20px;padding-right:20px;}
+    .loop-grid,.missing-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-brand">Executa — Funnel Architecture</div>
+    <div class="header-sub">Prepared by Jean Mundabi Fala · MDB Growth Capital · May 2026</div>
+  </div>
+  <div style="font-size:12px;color:var(--text-muted);">For: Mathew, Co-founder</div>
+</header>
+
+<div class="page-hero">
+  <div class="page-tag">Funnel Architecture · TODAY vs AFTER MDB vs MISSING</div>
+  <h1>Executa's Acquisition Funnel:<br>Where It Is, Where It Goes, What Is Missing</h1>
+  <p>A stage-by-stage breakdown of Executa's current acquisition funnel, what it looks like after MDB's 90-day programme, and the specific layers that are absent today but compound over 18 months.</p>
+</div>
+
+<div class="container">
+
+  <!-- FUNNEL CASCADE -->
+  <section>
+    <div class="sec-tag">Funnel Cascade</div>
+    <h2>ToFu / MoFu / BoFu / Sale — The Complete Picture</h2>
+    <p class="sec-sub">Four funnel stages. Three columns: what is happening now, what changes after MDB installs the acquisition system, and what is still missing after the 90-day programme.</p>
+
+    <table class="funnel-table">
+      <thead>
+        <tr>
+          <th style="width:100px;">Stage</th>
+          <th style="width:180px;"><span style="color:var(--danger);">TODAY</span> — What Is Happening</th>
+          <th style="width:180px;"><span style="color:var(--success);">AFTER MDB</span> — What Changes</th>
+          <th><span style="color:var(--warning);">MISSING</span> — What Still Needs Building</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge-stage bs-tofu">ToFu</span><br><span style="font-size:11px;color:var(--text-dim);margin-top:4px;display:block;">Attraction</span></td>
+          <td class="stage-today">
+            <span class="stage-label">Founder-led referrals only</span>
+            Zero inbound. No content, no ads, no LinkedIn posts in 90 days, no SEO visibility. Every new client comes through one of the three co-founders' personal networks. The network is saturating at boutique level — no Tier 1 PE or M&A brand in the client list.
+          </td>
+          <td class="stage-after">
+            <span class="stage-label">Systematic account-based outbound</span>
+            200-firm named account list built. Trigger and Friction email sequences live. LinkedIn sequence active. 10 to 20 emails sent per day to qualified PE Partners and M&A MDs. First replies arriving within 10 to 14 days of launch.
+          </td>
+          <td class="stage-missing">
+            <span class="stage-label">Inbound engine and content presence</span>
+            Authority Engine required for long-term inbound. LinkedIn content flywheel (2 to 3 posts per week), 20-week nurture sequence, and micro-budget retargeting. Conference presence (SuperReturn, IPEM) for warm-context conversations. These compound over 6 to 18 months.
+          </td>
+        </tr>
+        <tr>
+          <td><span class="badge-stage bs-mofu">MoFu</span><br><span style="font-size:11px;color:var(--text-dim);margin-top:4px;display:block;">Alignment</span></td>
+          <td class="stage-today">
+            <span class="stage-label">Demos only when introductions arrive</span>
+            Forward Deployed Engineering creates stickiness once a demo is booked. Demo-to-pilot conversion is likely high when the demo reaches the right decision-maker. But there is no systematic way to get the right person to a demo without a personal introduction.
+          </td>
+          <td class="stage-after">
+            <span class="stage-label">Pre-qualified pipeline feeding demos</span>
+            Qualified replies from the outbound programme are screened for genuine intent. Mathew and the sales hire receive warm prospects — not cold replies. Demo show rate target: 85 percent. HubSpot tracks every touchpoint from first email to booked demo.
+          </td>
+          <td class="stage-missing">
+            <span class="stage-label">Case studies and peer reference programme</span>
+            No published case studies with named outcomes. PE Partners make vendor decisions through peer trust — they need a reference call with a GP or MD who has used Executa on a live deal. Two named case studies (EY and Ravensford Capital) + structured reference call programme are the MoFu conversion assets not yet built.
+          </td>
+        </tr>
+        <tr>
+          <td><span class="badge-stage bs-bofu">BoFu</span><br><span style="font-size:11px;color:var(--text-dim);margin-top:4px;display:block;">Activation</span></td>
+          <td class="stage-today">
+            <span class="stage-label">Two-week embed is the conversion event</span>
+            Forward Deployed Engineering is Executa's most powerful conversion asset. Engineers embed with the client for two weeks. Every workflow is customised. Every output template is trained on the firm's methodology. The product sells itself once someone sees it on their own documents.
+          </td>
+          <td class="stage-after">
+            <span class="stage-label">Forward Deployed Engineering accelerated</span>
+            The 200-firm account list and systematic outreach creates a pipeline of pre-qualified prospects who have already engaged with the content (emails, LinkedIn, case studies) before the demo. The Forward Deployed Engineering onboarding converts a higher percentage because the prospect arrives educated — not cold.
+          </td>
+          <td class="stage-missing">
+            <span class="stage-label">Structured referral trigger programme</span>
+            No system currently converts successful onboarding into warm introductions. The Forward Deployed Engineering relationship creates the deepest client bond in the competitive landscape — but without a 30-day post-onboarding referral sequence, that relationship does not generate systematic introductions. This is the highest-leverage BoFu gap.
+          </td>
+        </tr>
+        <tr>
+          <td><span class="badge-stage bs-sale">Sale</span><br><span style="font-size:11px;color:var(--text-dim);margin-top:4px;display:block;">Conversion</span></td>
+          <td class="stage-today">
+            <span class="stage-label">Ad hoc deal closure, no process</span>
+            Pilot agreements are likely informal (no pricing page, no published tiers, no documented pilot structure). Each deal is a custom negotiation between a co-founder and a boutique advisory MD. This works for the first 10 clients. It does not scale.
+          </td>
+          <td class="stage-after">
+            <span class="stage-label">Documented pilot model and pricing structure</span>
+            Published pilot model (90 days, no lock-in) gives prospects a clear buying decision to make. Pricing tiers by firm type (boutique advisory vs mid-market PE vs Big Four) reduce negotiation friction. HubSpot tracks deal stage so the sales hire always knows where each prospect is in the process.
+          </td>
+          <td class="stage-missing">
+            <span class="stage-label">Pricing page and procurement support</span>
+            No public pricing page. PE funds and advisory firms need a number to take to their management team. A published pricing structure (even an "indicative starting from" figure) reduces the time from "interested" to "approval granted" by 3 to 4 weeks for each deal. Long-term: procurement support documentation for Big Four clients who have formal vendor approval processes.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- GROWTH LOOPS -->
+  <section>
+    <div class="sec-tag success">Growth Feedback Loops</div>
+    <h2>Three Compounding Mechanisms</h2>
+    <p class="sec-sub">Each loop is self-reinforcing. The more clients win from the outbound programme, the more each loop compounds. Infrastructure, not campaigns.</p>
+    <div class="loop-grid">
+      <div class="loop-card">
+        <div class="loop-num">01</div>
+        <h4>Core Acquisition Loop</h4>
+        <p>Every new client from the outbound programme introduces Executa into a new network layer. The first 10 boutique advisory clients know 50 other boutique advisory firms. The first 5 PE fund clients have co-investors at another 20 funds. The referral is built into the product — Forward Deployed Engineering creates deep relationships that generate introductions.</p>
+        <div class="loop-steps">
+          <span class="ls h">Outbound to PE Partners</span>
+          <span class="ls">→ Reply</span>
+          <span class="ls">→ Demo</span>
+          <span class="ls h">→ FDE Onboarding</span>
+          <span class="ls">→ Client introduces peers</span>
+          <span class="ls h">→ New targets</span>
+        </div>
+      </div>
+      <div class="loop-card">
+        <div class="loop-num">02</div>
+        <h4>Credibility and Case Study Loop</h4>
+        <p>New client onboards → 30-day check-in produces first results metrics (IC memo time saved, deal velocity improvement, analyst hours recovered) → Results become a named case study → Case study shared at SuperReturn or IPEM converts the conference pipeline → Conference pipeline becomes new client cohort → New cohort produces new case studies. The loop compounds with every engagement.</p>
+        <div class="loop-steps">
+          <span class="ls">Client onboards</span>
+          <span class="ls h">→ 30-day metrics</span>
+          <span class="ls">→ Named case study</span>
+          <span class="ls h">→ SuperReturn / IPEM</span>
+          <span class="ls">→ Conference pipeline</span>
+          <span class="ls h">→ New cohort</span>
+        </div>
+      </div>
+      <div class="loop-card">
+        <div class="loop-num">03</div>
+        <h4>Analyst-to-Partner Referral Loop</h4>
+        <p>Junior analysts and associates who use Executa on live deals advance in their careers. They become the Associates, VPs, and Partners at PE funds and advisory firms in 3 to 7 years. Their experience with Executa becomes the vendor preference when they reach the decision-making seat. Executa's lowest-cost future channel is the analysts who love it today. This loop compounds over a 5 to 10 year horizon.</p>
+        <div class="loop-steps">
+          <span class="ls h">Analyst uses Executa daily</span>
+          <span class="ls">→ Becomes Associate, VP</span>
+          <span class="ls">→ Reaches Partner seat</span>
+          <span class="ls h">→ Becomes the buyer</span>
+          <span class="ls">→ Executa is default vendor</span>
+          <span class="ls h">→ No acquisition cost</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSING LAYERS -->
+  <section style="border-bottom:none;">
+    <div class="sec-tag danger">Missing Infrastructure</div>
+    <h2>The Layers That Are Absent Today</h2>
+    <p class="sec-sub">These are not urgent gaps — they are compounding gaps. Each missing layer costs more the longer it is absent, because competitors are building them now.</p>
+    <div class="missing-grid">
+      <div class="missing-card">
+        <h4>No Named Case Studies</h4>
+        <p>EY, Deloitte, and KPMG are named clients. But no case study with quantified outcomes exists publicly. A PE Partner evaluating Executa needs a named case study from a firm they recognise — with specific metrics (hours saved, deal velocity improvement, analyst capacity recovered). This is the single highest-leverage trust asset Executa is missing.</p>
+      </div>
+      <div class="missing-card">
+        <h4>No Content Presence</h4>
+        <p>Zero LinkedIn posts in the last 90 days. No blog. No newsletter. No benchmark reports. PE Partners and M&A MDs who encounter Executa in a cold email have no way to verify domain depth before the demo. The Authority Engine score is 6/7 RECOMMENDED — content is the fastest way to shorten the sales cycle for the 95 percent of the market who are not ready to buy today.</p>
+      </div>
+      <div class="missing-card">
+        <h4>No Published Pricing</h4>
+        <p>No pricing page. No published tier structure. Every prospect who is interested must request a conversation to get a number. This creates friction in the evaluation process and slows deal progression at every mid-market firm where a junior analyst or associate is scoping the market before the Partner is briefed.</p>
+      </div>
+      <div class="missing-card">
+        <h4>No Conference Presence</h4>
+        <p>SuperReturn (June 2026) and IPEM Paris are the two events where 80 percent of Executa's primary ICP (mid-market PE Partners and MDs) gather in person. No presence detected. A sponsored roundtable or speaking slot on AI for deal workflow at either event would generate 20 to 30 warm conversations in one day — equivalent to 6 weeks of cold outreach.</p>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-dim);margin-top:32px;">Strategy and GTM research by Jean Mundabi Fala · MDB Growth Capital · 2026</p>
+  </section>
+
+</div><!-- /container -->
+</body>
+</html>

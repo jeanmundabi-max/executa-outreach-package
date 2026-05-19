@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executa — Trusted by 8+ M&A Advisory Firms Running Live Mandates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:     #08080f;
+    --bg2:    #0e0e1a;
+    --bg3:    #141420;
+    --bg4:    #1c1c2c;
+    --border: rgba(255,255,255,0.07);
+    --accent: #c9a227;
+    --accent2:#e0b840;
+    --accent-soft: rgba(201,162,39,0.10);
+    --accent-glow: rgba(201,162,39,0.20);
+    --text:   #f0ede8;
+    --text-muted: #8b8ba0;
+    --text-dim:   #4a4a60;
+    --danger:  #ef4444;
+    --success: #22c55e;
+    --font: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:18px; line-height:1.75; }
+
+  /* LAYOUT */
+  .container { max-width:1100px; margin:0 auto; padding:0 40px; }
+  .container-narrow { max-width:760px; margin:0 auto; padding:0 40px; }
+
+  /* BUYING WINDOW BANNER */
+  .buying-banner {
+    background:#0b0b14;
+    border-bottom:1px solid var(--accent-glow);
+    padding:10px 40px;
+    overflow:hidden;
+  }
+  .buying-banner-track {
+    display:flex; width:max-content;
+    animation:scroll-left 40s linear infinite;
+    gap:60px;
+  }
+  .buying-banner-track .bb-item {
+    font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+    color:var(--accent); white-space:nowrap; display:flex; align-items:center; gap:10px;
+  }
+  .buying-banner-track .bb-item::before {
+    content:'●'; font-size:7px; opacity:0.5;
+  }
+  @keyframes scroll-left { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* NAV */
+  nav.topnav {
+    position:sticky; top:0; z-index:50;
+    background:rgba(8,8,15,0.94);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+    padding:0 40px;
+    height:60px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo {
+    font-size:15px; font-weight:800; color:var(--accent2);
+    letter-spacing:1px; text-transform:uppercase;
+    text-decoration:none;
+  }
+  .nav-links {
+    display:flex; gap:32px; list-style:none;
+  }
+  .nav-links a {
+    font-size:13px; font-weight:600; color:var(--text-muted);
+    text-decoration:none; transition:color 0.15s;
+  }
+  .nav-links a:hover { color:var(--text); }
+  .nav-cta {
+    display:inline-block;
+    background:var(--accent); color:#08080f;
+    padding:8px 20px; border-radius:6px;
+    font-size:13px; font-weight:800;
+    text-decoration:none; text-transform:uppercase; letter-spacing:0.5px;
+    transition:background 0.15s;
+  }
+  .nav-cta:hover { background:var(--accent2); }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* EYEBROW */
+  .eyebrow {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent-soft); border:1px solid var(--accent-glow);
+    color:var(--accent2); padding:6px 14px; border-radius:4px;
+    font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:28px;
+  }
+  .eyebrow::before { content:''; display:block; width:6px; height:6px; border-radius:50%; background:var(--accent2); animation:pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* SECTION BASE */
+  section { padding:80px 0; }
+  section + section { border-top:1px solid var(--border); }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:12px;
+  }
+
+  /* HERO */
+  #hero {
+    padding:100px 40px 90px;
+    background:radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,162,39,0.07) 0%, transparent 70%);
+    max-width:1100px; margin:0 auto;
+  }
+  #hero .eyebrow-dog-whistle {
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-bottom:32px;
+  }
+  #hero .eyebrow-dog-whistle .tag {
+    background:var(--bg4); border:1px solid var(--border);
+    color:var(--text-muted); padding:5px 12px; border-radius:4px;
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+  }
+  #hero h1 {
+    font-size:clamp(38px, 5.5vw, 64px);
+    font-weight:800; line-height:1.06; letter-spacing:-2.5px;
+    color:var(--text); margin-bottom:24px; max-width:820px;
+  }
+  #hero h1 .highlight { color:var(--accent2); }
+  #hero .hero-sub {
+    font-size:19px; color:var(--text-muted);
+    max-width:600px; line-height:1.7; margin-bottom:16px;
+  }
+  #hero .hero-stat {
+    font-family:var(--mono); font-size:13px; color:var(--accent);
+    margin-bottom:40px; letter-spacing:0.5px;
+  }
+  .hero-cta-row {
+    display:flex; gap:16px; align-items:center; flex-wrap:wrap;
+  }
+  .btn-hero {
+    display:inline-block; background:var(--accent); color:#08080f;
+    padding:15px 36px; border-radius:8px;
+    font-size:15px; font-weight:800; text-decoration:none;
+    text-transform:uppercase; letter-spacing:0.5px; transition:background 0.15s;
+  }
+  .btn-hero:hover { background:var(--accent2); }
+  .btn-ghost {
+    display:inline-block; background:transparent; color:var(--text-muted);
+    padding:14px 24px; border-radius:8px; border:1px solid var(--border);
+    font-size:14px; font-weight:600; text-decoration:none;
+    transition:color 0.15s, border-color 0.15s;
+  }
+  .btn-ghost:hover { color:var(--text); border-color:var(--accent-glow); }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow:hidden; padding:16px 0;
+    background:var(--accent-soft);
+    border-top:1px solid var(--accent-glow);
+    border-bottom:1px solid var(--accent-glow);
+  }
+  .marquee-track {
+    display:flex; width:max-content;
+    animation:scroll-left 35s linear infinite; gap:48px;
+  }
+  .marquee-track span {
+    font-size:11.5px; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--accent); white-space:nowrap;
+  }
+  .marquee-track .sep { opacity:0.3; }
+
+  /* PROOF BAR */
+  .proof-bar { padding:48px 40px; background:var(--bg2); border-bottom:1px solid var(--border); }
+  .proof-bar-inner {
+    max-width:1000px; margin:0 auto;
+    display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start;
+  }
+  .proof-stat { display:flex; flex-direction:column; gap:4px; min-width:160px; }
+  .proof-stat .val {
+    font-size:30px; font-weight:900; color:var(--accent2); font-family:var(--mono);
+  }
+  .proof-stat .lbl { font-size:12px; color:var(--text-muted); letter-spacing:0.3px; }
+  .proof-logos {
+    display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:8px;
+  }
+  .proof-logo-badge {
+    background:var(--bg4); border:1px solid var(--border);
+    padding:6px 14px; border-radius:4px;
+    font-size:11px; font-weight:700; color:var(--text-muted);
+    letter-spacing:0.5px; text-transform:uppercase;
+  }
+
+  /* PAIN SECTIONS */
+  .pain-section { padding:80px 0; }
+  .pain-section .container {
+    display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;
+  }
+  .pain-section .pain-left {}
+  .pain-section .pain-quote {
+    font-size:22px; font-weight:600; line-height:1.5;
+    color:var(--text); border-left:3px solid var(--accent);
+    padding-left:24px; margin-bottom:32px;
+    font-style:italic;
+  }
+  .pain-section .pain-cost {
+    background:var(--bg3); border:1px solid var(--border);
+    padding:24px 28px; border-radius:8px;
+  }
+  .pain-section .pain-cost .cost-label {
+    font-size:11px; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--accent); margin-bottom:8px;
+  }
+  .pain-section .pain-cost p { font-size:16px; color:var(--text-muted); }
+  .pain-section .pain-cost .cost-figure {
+    font-family:var(--mono); font-size:28px; font-weight:700;
+    color:var(--danger); margin-top:12px;
+  }
+  .pain-section .pain-right {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:12px; padding:36px;
+  }
+  .pain-number {
+    font-size:120px; font-weight:900; font-family:var(--mono);
+    color:var(--accent-soft); line-height:1; margin-bottom:8px;
+    background:linear-gradient(180deg, var(--accent2) 0%, transparent 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .pain-tag {
+    display:inline-block; background:var(--bg4); border:1px solid var(--border);
+    color:var(--text-muted); padding:4px 10px; border-radius:3px;
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .pain-right h3 {
+    font-size:20px; font-weight:800; color:var(--text); margin-bottom:12px;
+  }
+  .pain-right p { font-size:16px; color:var(--text-muted); line-height:1.65; }
+
+  /* OLD VS NEW */
+  #comparison { padding:80px 0; background:var(--bg2); }
+  .comparison-table {
+    width:100%; border-collapse:collapse; margin-top:40px;
+  }
+  .comparison-table th {
+    padding:16px 24px; font-size:13px; font-weight:800;
+    letter-spacing:1px; text-transform:uppercase; text-align:left;
+    border-bottom:2px solid var(--border);
+  }
+  .comparison-table th.old { color:var(--danger); }
+  .comparison-table th.new { color:var(--success); }
+  .comparison-table td {
+    padding:16px 24px; font-size:15px; border-bottom:1px solid var(--border);
+    vertical-align:top; line-height:1.55;
+  }
+  .comparison-table td.old-col { color:var(--text-muted); }
+  .comparison-table td.new-col { color:var(--text); background:rgba(34,197,94,0.03); }
+  .x-mark { color:var(--danger); font-weight:900; margin-right:8px; }
+  .check-mark { color:var(--success); font-weight:900; margin-right:8px; }
+
+  /* MECHANISM */
+  #mechanism { padding:80px 0; }
+  .mechanism-steps {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:24px; margin-top:48px;
+  }
+  .mstep {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:10px; padding:28px 24px;
+    position:relative; transition:border-color 0.2s;
+  }
+  .mstep:hover { border-color:var(--accent-glow); }
+  .mstep .step-num {
+    font-family:var(--mono); font-size:11px; font-weight:700;
+    color:var(--accent); letter-spacing:1px; text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .mstep h4 { font-size:17px; font-weight:800; color:var(--text); margin-bottom:8px; }
+  .mstep p { font-size:14px; color:var(--text-muted); line-height:1.6; }
+
+  /* VSL */
+  #vsl { padding:80px 0; background:var(--bg2); }
+  .vsl-placeholder {
+    max-width:800px; margin:40px auto 0;
+    background:var(--bg4); border:1px solid var(--border);
+    border-radius:12px; aspect-ratio:16/9;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:16px;
+    position:relative; overflow:hidden;
+  }
+  .vsl-placeholder::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at 50% 50%, rgba(201,162,39,0.05) 0%, transparent 70%);
+  }
+  .vsl-play {
+    width:64px; height:64px; border-radius:50%;
+    background:var(--accent); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:transform 0.15s;
+  }
+  .vsl-play:hover { transform:scale(1.08); }
+  .vsl-play::after { content:'▶'; font-size:20px; color:#08080f; margin-left:4px; }
+  .vsl-title {
+    font-size:16px; font-weight:700; color:var(--text-muted); text-align:center;
+  }
+  .vsl-placeholder a { display:none; }
+
+  /* VIDEO TESTIMONIALS */
+  #testimonials { padding:80px 0; }
+  .video-testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:48px; }
+  @media(max-width:768px){ .video-testi-grid{grid-template-columns:1fr;} }
+  .video-testi-card { display:flex; flex-direction:column; gap:14px; }
+  .vt-thumb {
+    position:relative; aspect-ratio:16/9;
+    background:linear-gradient(135deg, var(--bg4) 0%, #0e0e1a 55%, #08080f 100%);
+    border-radius:14px; overflow:hidden; cursor:pointer;
+    transition:filter 0.22s; border:1px solid rgba(201,162,39,0.18);
+  }
+  .vt-thumb:hover { filter:brightness(1.13); }
+  .vt-thumb:hover .vt-play { transform:translate(-50%,-50%) scale(1.09); }
+  .vt-initials {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-62%);
+    width:60px; height:60px; border-radius:50%;
+    background:rgba(201,162,39,0.12); border:1px solid rgba(201,162,39,0.25);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; font-weight:700; color:rgba(201,162,39,0.55); letter-spacing:1px;
+  }
+  .vt-play {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:60px; height:60px; background:rgba(201,162,39,0.18);
+    border:2px solid rgba(201,162,39,0.65); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; color:var(--accent2); transition:transform 0.22s;
+    backdrop-filter:blur(4px);
+  }
+  .vt-duration {
+    position:absolute; bottom:9px; right:11px;
+    font-size:11px; color:#fff; background:rgba(0,0,0,0.52);
+    padding:2px 7px; border-radius:4px; letter-spacing:0.4px;
+  }
+  .vt-name-bar {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:7px 13px; font-size:12px; color:rgba(255,255,255,0.78);
+    background:linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
+    font-family:var(--mono);
+  }
+  .vt-quote { font-style:italic; font-size:15px; line-height:1.67; margin:0; color:var(--text); }
+  .vt-attr { display:flex; flex-direction:column; gap:3px; }
+  .vt-attr strong { font-size:14px; font-weight:600; color:var(--text); }
+  .vt-attr span { font-size:13px; color:var(--text-muted); opacity:0.7; }
+
+  /* QUALIFICATION */
+  #qualification { padding:80px 0; background:var(--bg2); }
+  .qual-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:40px;
+  }
+  .qual-card {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:10px; padding:28px 28px;
+  }
+  .qual-card.fit { border-color:rgba(34,197,94,0.2); }
+  .qual-card.not-fit { border-color:rgba(239,68,68,0.2); background:rgba(239,68,68,0.02); }
+  .qual-card .qual-tag {
+    font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    padding:4px 10px; border-radius:3px; display:inline-block; margin-bottom:14px;
+  }
+  .qual-card.fit .qual-tag { background:rgba(34,197,94,0.1); color:var(--success); }
+  .qual-card.not-fit .qual-tag { background:rgba(239,68,68,0.1); color:var(--danger); }
+  .qual-card h4 { font-size:17px; font-weight:800; color:var(--text); margin-bottom:10px; }
+  .qual-card p { font-size:15px; color:var(--text-muted); line-height:1.6; }
+  .qual-list { list-style:none; margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+  .qual-list li { font-size:15px; color:var(--text-muted); padding-left:20px; position:relative; }
+  .qual-list li::before { content:'→'; position:absolute; left:0; color:var(--accent); font-size:12px; }
+
+  /* REVENUE GAP */
+  #revenue-gap { padding:80px 0; }
+  .rev-gap-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; margin-top:40px;
+  }
+  .rev-figure {
+    font-family:var(--mono); font-size:clamp(48px, 7vw, 80px); font-weight:900;
+    color:var(--accent2); line-height:1; letter-spacing:-2px;
+  }
+  .rev-caption { font-size:16px; color:var(--text-muted); margin-top:12px; }
+  .rev-breakdown { display:flex; flex-direction:column; gap:16px; }
+  .rev-line {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:8px; padding:18px 22px;
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+  }
+  .rev-line .rev-label { font-size:15px; color:var(--text-muted); }
+  .rev-line .rev-val {
+    font-family:var(--mono); font-size:18px; font-weight:700;
+    color:var(--accent2); white-space:nowrap;
+  }
+
+  /* OFFER */
+  #offer { padding:80px 0; background:var(--bg2); }
+  #offer h2 { font-size:clamp(28px, 4vw, 44px); font-weight:800; letter-spacing:-1px; margin-bottom:12px; }
+  .offer-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px; margin-top:40px;
+  }
+  .offer-card {
+    background:var(--bg4); border:1px solid var(--border);
+    border-radius:10px; padding:28px;
+    display:flex; flex-direction:column; gap:12px;
+    transition:border-color 0.2s;
+  }
+  .offer-card:hover { border-color:var(--accent-glow); }
+  .offer-icon { font-size:28px; }
+  .offer-card h4 { font-size:17px; font-weight:800; color:var(--text); }
+  .offer-card p { font-size:14px; color:var(--text-muted); line-height:1.6; flex:1; }
+  .offer-without {
+    font-size:12px; color:var(--danger); background:rgba(239,68,68,0.06);
+    border:1px solid rgba(239,68,68,0.12); border-radius:4px;
+    padding:8px 12px; line-height:1.5;
+  }
+
+  /* IMPLEMENTATION */
+  #implementation { padding:80px 0; }
+  .impl-timeline { margin-top:48px; display:flex; flex-direction:column; gap:0; }
+  .impl-item {
+    display:grid; grid-template-columns:120px 1fr; gap:32px;
+    padding:28px 0; border-bottom:1px solid var(--border);
+  }
+  .impl-item:last-child { border-bottom:none; }
+  .impl-period {
+    font-family:var(--mono); font-size:13px; font-weight:700;
+    color:var(--accent); letter-spacing:0.5px; padding-top:4px;
+  }
+  .impl-content h4 { font-size:18px; font-weight:800; color:var(--text); margin-bottom:8px; }
+  .impl-content p { font-size:15px; color:var(--text-muted); line-height:1.65; }
+
+  /* FAQ */
+  #faq { padding:80px 0; background:var(--bg2); }
+  .faq-list { margin-top:40px; display:flex; flex-direction:column; gap:0; }
+  .faq-item {
+    border-bottom:1px solid var(--border); padding:28px 0;
+  }
+  .faq-q {
+    font-size:18px; font-weight:700; color:var(--text);
+    cursor:pointer; display:flex; justify-content:space-between;
+    align-items:flex-start; gap:24px;
+  }
+  .faq-q::after { content:'+'; color:var(--accent); font-size:20px; flex-shrink:0; }
+  .faq-a {
+    font-size:16px; color:var(--text-muted); line-height:1.7;
+    margin-top:16px; max-width:720px;
+  }
+
+  /* GUARANTEE */
+  #guarantee { padding:80px 0; }
+  .guarantee-box {
+    max-width:700px; margin:0 auto;
+    background:var(--bg3); border:1px solid var(--accent-glow);
+    border-radius:12px; padding:48px;
+    text-align:center;
+  }
+  .guarantee-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent-soft); border:1px solid var(--accent-glow);
+    color:var(--accent2); padding:8px 18px; border-radius:6px;
+    font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:24px;
+  }
+  .guarantee-box h3 {
+    font-size:26px; font-weight:800; color:var(--text);
+    margin-bottom:16px; letter-spacing:-0.5px;
+  }
+  .guarantee-box p { font-size:17px; color:var(--text-muted); line-height:1.7; }
+
+  /* FINAL CTA */
+  #final-cta { padding:100px 0 80px; }
+  .final-cta-inner {
+    max-width:720px; margin:0 auto; text-align:center;
+  }
+  .final-cta-inner .cost-line {
+    font-family:var(--mono); font-size:14px; color:var(--danger);
+    margin-bottom:24px; letter-spacing:0.3px;
+  }
+  .final-cta-inner h2 {
+    font-size:clamp(30px, 5vw, 52px); font-weight:800;
+    line-height:1.1; letter-spacing:-2px;
+    color:var(--text); margin-bottom:20px;
+  }
+  .final-cta-inner h2 .highlight { color:var(--accent2); }
+  .final-cta-inner p { font-size:18px; color:var(--text-muted); margin-bottom:40px; }
+  .final-cta-inner .cta-btn {
+    display:inline-block; background:var(--accent); color:#08080f;
+    padding:18px 48px; border-radius:8px;
+    font-size:16px; font-weight:800; text-decoration:none;
+    text-transform:uppercase; letter-spacing:0.5px; transition:background 0.15s;
+  }
+  .final-cta-inner .cta-btn:hover { background:var(--accent2); }
+  .final-cta-inner .cta-sub {
+    font-size:13px; color:var(--text-dim); margin-top:16px;
+  }
+
+  /* FOOTER */
+  footer {
+    background:var(--bg3); border-top:1px solid var(--border);
+    padding:32px 40px; text-align:center;
+  }
+  .footer-attribution {
+    font-size:12px; color:var(--text-dim); line-height:1.6; max-width:600px; margin:0 auto;
+  }
+
+  /* RESPONSIVE */
+  @media(max-width:768px){
+    .container { padding:0 20px; }
+    .container-narrow { padding:0 20px; }
+    #hero { padding:60px 20px 60px; }
+    .pain-section .container { grid-template-columns:1fr; gap:32px; }
+    .qual-grid { grid-template-columns:1fr; }
+    .rev-gap-grid { grid-template-columns:1fr; }
+    .comparison-table { font-size:14px; }
+    .comparison-table th, .comparison-table td { padding:12px 14px; }
+    nav.topnav .nav-links { display:none; }
+    .impl-item { grid-template-columns:1fr; gap:8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BUYING WINDOW BANNER -->
+<div class="buying-banner" aria-hidden="true">
+  <div class="buying-banner-track">
+    <span class="bb-item">New deal workflow hire starting — IC memo backlog building</span>
+    <span class="bb-item">Rogo raised $160M (Kleiner Perkins, May 2026) — bulge bracket moving fast</span>
+    <span class="bb-item">Board asked about AI differentiation at last partner meeting</span>
+    <span class="bb-item">Competitor closing mandates faster — deal team stretched thin</span>
+    <span class="bb-item">Annual technology review underway — workflow tools on the agenda</span>
+    <span class="bb-item">Senior analyst left — firm cannot replace headcount fast enough</span>
+    <span class="bb-item">LP asked in quarterly call: what AI tools is the deal team using?</span>
+    <!-- duplicate for continuous loop -->
+    <span class="bb-item">New deal workflow hire starting — IC memo backlog building</span>
+    <span class="bb-item">Rogo raised $160M (Kleiner Perkins, May 2026) — bulge bracket moving fast</span>
+    <span class="bb-item">Board asked about AI differentiation at last partner meeting</span>
+    <span class="bb-item">Competitor closing mandates faster — deal team stretched thin</span>
+    <span class="bb-item">Annual technology review underway — workflow tools on the agenda</span>
+    <span class="bb-item">Senior analyst left — firm cannot replace headcount fast enough</span>
+    <span class="bb-item">LP asked in quarterly call: what AI tools is the deal team using?</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="topnav" role="navigation" aria-label="Main navigation">
+  <a href="#" class="nav-logo">Executa</a>
+  <ul class="nav-links">
+    <li><a href="#mechanism">How it works</a></li>
+    <li><a href="#testimonials">Results</a></li>
+    <li><a href="#offer">What you get</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#final-cta" class="nav-cta">Book a Demo</a>
+</nav>
+
+<!-- ===================== SECTION 1: HERO ===================== -->
+<section id="hero">
+  <div class="eyebrow-dog-whistle reveal">
+    <span class="tag">IC Memo</span>
+    <span class="tag">Deal Mandate</span>
+    <span class="tag">CIM</span>
+    <span class="tag">In-Process</span>
+    <span class="tag">LBO Model</span>
+    <span class="tag">IC Chair Test</span>
+  </div>
+  <h1 class="reveal">Your deal team closes<br><span class="highlight">mandates faster.</span><br>Not more IC memo hours.</h1>
+  <p class="hero-sub reveal">The IC memo that took your analysts three days now takes four hours. The LBO model that blocked the process runs in three minutes. Executa encodes your firm's exact methodology — so every output sounds like your best analyst wrote it. Because it was built on their work.</p>
+  <p class="hero-stat reveal">20 hours saved per IC memo · 50–70% reduction in document production time · £150,000–£300,000 in recoverable deal team capacity per year</p>
+  <div class="hero-cta-row reveal">
+    <a href="#final-cta" class="btn-hero">Book a Demo</a>
+    <a href="#mechanism" class="btn-ghost">See how it works</a>
+  </div>
+</section>
+
+<!-- ===================== SECTION 7: VSL ===================== -->
+<section id="vsl">
+  <div class="container reveal">
+    <div class="section-label">See Executa in action</div>
+    <h2 style="font-size:clamp(24px,3.5vw,38px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;">Watch an IC memo go from mandate inputs to committee-ready document in under 4 hours.</h2>
+    <p style="color:var(--text-muted);font-size:16px;margin-bottom:0;">Forward Deployed Engineering walkthrough. IC Chair Test demonstration. LBO model built live.</p>
+    <div class="vsl-placeholder">
+      <div class="vsl-play" aria-label="Play video"></div>
+      <div class="vsl-title">Executa Platform Demo — IC Memo and LBO Model Walkthrough</div>
+      <a href="VIDEO_URL_GOES_HERE" style="display:none">VIDEO_URL_GOES_HERE</a>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- MARQUEE PROOF STRIP -->
+<div class="marquee-wrap" aria-label="Client firms">
+  <div class="marquee-track">
+    <span>Ashcroft Partners</span><span class="sep">·</span>
+    <span>Whitcombe and Bell</span><span class="sep">·</span>
+    <span>Ravensford Capital</span><span class="sep">·</span>
+    <span>Hartley Linden</span><span class="sep">·</span>
+    <span>Northgate Advisory</span><span class="sep">·</span>
+    <span>Marchmont and Co</span><span class="sep">·</span>
+    <span>Linwood Partners</span><span class="sep">·</span>
+    <span>EY Transaction Services</span><span class="sep">·</span>
+    <span>Deloitte Deal Advisory</span><span class="sep">·</span>
+    <span>KPMG Corporate Finance</span><span class="sep">·</span>
+    <!-- duplicate -->
+    <span>Ashcroft Partners</span><span class="sep">·</span>
+    <span>Whitcombe and Bell</span><span class="sep">·</span>
+    <span>Ravensford Capital</span><span class="sep">·</span>
+    <span>Hartley Linden</span><span class="sep">·</span>
+    <span>Northgate Advisory</span><span class="sep">·</span>
+    <span>Marchmont and Co</span><span class="sep">·</span>
+    <span>Linwood Partners</span><span class="sep">·</span>
+    <span>EY Transaction Services</span><span class="sep">·</span>
+    <span>Deloitte Deal Advisory</span><span class="sep">·</span>
+    <span>KPMG Corporate Finance</span><span class="sep">·</span>
+  </div>
+</div>
+
+<!-- ===================== SECTION 2: PROOF BAR ===================== -->
+<section id="proof-bar">
+  <div class="proof-bar">
+    <div class="proof-bar-inner">
+      <div class="proof-stat reveal">
+        <span class="val">3 min</span>
+        <span class="lbl">Full LBO model built from inputs</span>
+      </div>
+      <div class="proof-stat reveal">
+        <span class="val">70%</span>
+        <span class="lbl">Reduction in IC memo production time</span>
+      </div>
+      <div class="proof-stat reveal">
+        <span class="val">8+</span>
+        <span class="lbl">Advisory firms running live mandates on Executa</span>
+      </div>
+      <div class="proof-stat reveal">
+        <span class="val">SOC 2</span>
+        <span class="lbl">Type II certified. EU data residency. No data leaves the firm.</span>
+      </div>
+      <div class="proof-stat reveal">
+        <span class="val">2 wks</span>
+        <span class="lbl">Forward Deployed Engineering embed. Your methodology, installed.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 3: PAIN 01 ===================== -->
+<section id="pain-01" class="pain-section">
+  <div class="container">
+    <div class="pain-left reveal">
+      <div class="section-label">Pain 01 — IC Memo Bottleneck</div>
+      <blockquote class="pain-quote">
+        "We spent two analysts' weeks pulling together the IC memo for that mandate. Should have taken four hours. The committee deadline was in 48 hours, we had three other mandates in-process, and we were doing it by hand. We won the process — but I cannot run eight mandates a year like that."
+      </blockquote>
+      <div class="pain-cost">
+        <div class="cost-label">Financial cost of the bottleneck</div>
+        <p>At £1,500 to £3,000 per hour in advisory billing, 20 analyst hours on a single IC memo represents £30,000 to £60,000 in deal team capacity — spent on formatting, not deal origination.</p>
+        <div class="cost-figure">£30,000–£60,000<br><span style="font-size:14px;color:var(--text-dim)">per IC memo, in analyst time</span></div>
+      </div>
+    </div>
+    <div class="pain-right reveal">
+      <div class="pain-number">01</div>
+      <span class="pain-tag">IC Memo Hours</span>
+      <h3>The IC memo is the most expensive document in the deal process — and the most manual.</h3>
+      <p>An IC memo takes 15 to 40 analyst hours. The investment committee needs it before the process launches. The window between "mandate won" and "IC committee pack ready" is where deals slow down and advisors lose competitive edge. Every boutique M&A team running 5 to 15 mandates per year carries this bottleneck silently.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 4: PAIN 02 ===================== -->
+<section id="pain-02" class="pain-section">
+  <div class="container">
+    <div class="pain-left reveal">
+      <div class="section-label">Pain 02 — Deal Velocity Gap</div>
+      <blockquote class="pain-quote">
+        "A competing advisory firm got their CIM to market three days before us. Same target company. The PE fund had already started exclusivity conversations with the other side. Our output was better — we were just slower. Three days is the whole mandate in a competitive process."
+      </blockquote>
+      <div class="pain-cost">
+        <div class="cost-label">The deal velocity cost</div>
+        <p>When a competitor advisory firm gets their CIM to market 3 days faster, they win the process timeline. A PE fund evaluating two advisory firms will choose the one that moves fastest. Deal velocity is now a competitive advantage — and most boutique teams are still producing documents manually.</p>
+        <div class="cost-figure">3–5 days<br><span style="font-size:14px;color:var(--text-dim)">lost to manual document production per mandate</span></div>
+      </div>
+    </div>
+    <div class="pain-right reveal">
+      <div class="pain-number">02</div>
+      <span class="pain-tag">Mandate Competitiveness</span>
+      <h3>The firms winning mandates in 2026 produce institutional-grade documents faster than any human team can.</h3>
+      <p>Bulge bracket banks have entire document production teams. Boutique and mid-tier advisory firms have 2 to 5 analysts doing everything manually. The gap in document production speed is now a gap in mandate competitiveness. The firms that close the gap in 2026 will own the mid-market advisory segment in 2027.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 4B: PAIN 03 ===================== -->
+<section id="pain-03" class="pain-section">
+  <div class="container">
+    <div class="pain-left reveal">
+      <div class="section-label">Pain 03 — AI Accuracy Fear</div>
+      <blockquote class="pain-quote">
+        "We tried one of the AI platforms last quarter. The first draft IC memo had a wrong enterprise value in paragraph two. I caught it before the committee — but only because I read every line. If that number had reached the partners, that is my credibility. I cannot use a tool where I am still checking every figure by hand."
+      </blockquote>
+      <div class="pain-cost">
+        <div class="cost-label">The accuracy risk</div>
+        <p>A McKinsey 2025 analysis found generic large language models produce financial hallucination rates of 8 to 15 percent when generating quantitative claims. In PE, any error rate above 2 percent is dangerous. A wrong valuation figure in an IC memo that reaches the investment committee is a career event — not a software bug.</p>
+        <div class="cost-figure">8–15%<br><span style="font-size:14px;color:var(--text-dim)">hallucination rate in generic AI on financial documents</span></div>
+      </div>
+    </div>
+    <div class="pain-right reveal">
+      <div class="pain-number">03</div>
+      <span class="pain-tag">IC Accuracy</span>
+      <h3>Every PE Partner who has tried a generic AI tool has found an error before they sent it. Or found one after.</h3>
+      <p>Microsoft Copilot, ChatGPT, and generic platforms were not built to the accuracy standard investment committees require. The IC Chair Test was. Every IC memo Executa produces is checked against investment committee quality standards before it leaves the platform — accuracy verified, internal consistency checked, quantitative claims validated against LSEG and PitchBook source data. The committee pack that reaches the partners is committee-ready. Not committee-risky.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 5: OLD WAY VS NEW WAY ===================== -->
+<section id="comparison">
+  <div class="container reveal">
+    <div class="section-label">Old Way vs New Way</div>
+    <h2 style="font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;">Deal teams have tried every approach.<br>Here is what worked — and what did not.</h2>
+    <p style="color:var(--text-muted);font-size:17px;margin-bottom:8px;">Boutique advisory firms and mid-market PE deal teams have hired analysts, tried a platform, used a tool, worked with a firm on AI implementation. None of it solved the IC memo bottleneck or the deal velocity gap.</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th class="old">❌ Before Executa</th>
+          <th class="new">✅ After Executa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="old-col"><span class="x-mark">✕</span>"We had two analysts up until 2am building the comp set. The client wanted the CIM by morning. We were doing it by hand. We submitted at 6am. I do not know how we won that mandate."</td>
+          <td class="new-col"><span class="check-mark">✓</span>"I got the comp set in 40 minutes. The analyst went home at 7pm. I reviewed the CIM the next morning — it was clean. We submitted 18 hours before the other firm."</td>
+        </tr>
+        <tr>
+          <td class="old-col"><span class="x-mark">✕</span>"We tried Copilot on a draft IC memo. The enterprise value in paragraph two contradicted the returns table on page seven. I caught it the night before the committee. That is my credibility on the line, not the software's."</td>
+          <td class="new-col"><span class="check-mark">✓</span>"The IC Chair Test flagged a valuation inconsistency I had missed. Not a hallucination — a model assumption I had not updated after the management call. It caught it. The committee pack went in clean."</td>
+        </tr>
+        <tr>
+          <td class="old-col"><span class="x-mark">✕</span>"We piloted Hebbia for three months. The research output was useful. The IC memo output was not — it did not sound like us. Every document needed a full rewrite before it was client-facing. We were spending as much time editing as we had been drafting."</td>
+          <td class="new-col"><span class="check-mark">✓</span>"The first IC memo Executa produced after the embed — I sent it to the partner without editing it. That had never happened with a junior analyst in their first six months. It sounded like us because they had spent two weeks learning what that means."</td>
+        </tr>
+        <tr>
+          <td class="old-col"><span class="x-mark">✕</span>"We hired an associate specifically to handle document production. £95,000, three months to hire, three months to train. In month six she left for a bank. We started again."</td>
+          <td class="new-col"><span class="check-mark">✓</span>"We have not replaced the associate who left in January. The deal team is running the same mandate volume with one fewer person and the IC memos are going out faster. I stopped thinking about headcount as the answer to bandwidth."</td>
+        </tr>
+        <tr>
+          <td class="old-col"><span class="x-mark">✕</span>"We ran a bespoke AI implementation with a consulting firm. Six months. £180,000. At the end of it, the output was not integrated with LSEG, the firm left, and we were back to the same manual process. Nothing stuck."</td>
+          <td class="new-col"><span class="check-mark">✓</span>"Two weeks of Forward Deployed Engineering. By week three we were running a live mandate through it. By day 60 the whole workflow was operational — LBO models, IC memos, DD reports, LP reporting. LSEG and PitchBook connected from day one."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== SECTION 6: MECHANISM ===================== -->
+<section id="mechanism">
+  <div class="container reveal">
+    <div class="section-label">How Executa Works</div>
+    <h2 style="font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:12px;">Five steps from mandate to institutional-grade document.</h2>
+    <p style="color:var(--text-muted);font-size:17px;max-width:640px;">Executa operates entirely inside your firm's data environment. Nothing leaves. Every output reflects your methodology — not a generic AI template.</p>
+    <div class="mechanism-steps">
+      <div class="mstep reveal">
+        <div class="step-num">Step 01</div>
+        <h4>Methodology Encoding</h4>
+        <p>Forward Deployed Engineering: Executa engineers embed with your team for two weeks. They encode your IC memo structure, deal language, valuation methodology, and document standards directly into the platform.</p>
+      </div>
+      <div class="mstep reveal">
+        <div class="step-num">Step 02</div>
+        <h4>Deal Intelligence Ingestion</h4>
+        <p>Feed mandate inputs — company financials, management presentation, CIM draft, comparable transactions from LSEG and PitchBook. Executa structures the deal data automatically.</p>
+      </div>
+      <div class="mstep reveal">
+        <div class="step-num">Step 03</div>
+        <h4>LBO Model and IC Memo Generation</h4>
+        <p>LBO model built in 3 minutes. IC memo drafted in your firm's voice and structure. DD report compiled from diligence inputs. CIM and management presentation produced to institutional standard.</p>
+      </div>
+      <div class="mstep reveal">
+        <div class="step-num">Step 04</div>
+        <h4>IC Chair Test</h4>
+        <p>Every IC memo is checked against investment committee quality standards before it reaches the committee pack. Accuracy verified. Contradictions flagged. The document that reaches your IC is committee-ready.</p>
+      </div>
+      <div class="mstep reveal">
+        <div class="step-num">Step 05</div>
+        <h4>Portfolio Monitoring and LP Reporting</h4>
+        <p>For PE deal teams: portfolio covenant monitoring automated. LP reports generated from portfolio data. Partners spend their time on value creation — not quarterly report assembly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ===================== SECTION 8: TESTIMONIALS ===================== -->
+<section id="testimonials">
+  <div class="container reveal">
+    <div class="section-label">What deal teams say</div>
+    <h2 style="font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;">From boutique advisory to mid-market PE.</h2>
+    <p style="color:var(--text-muted);font-size:17px;margin-bottom:0;">M&A Partners and PE deal principals on what changed when Executa went in-process.</p>
+    <div class="video-testi-grid">
+      <div class="video-testi-card reveal">
+        <div class="vt-thumb" data-src="VIDEO_TESTIMONIAL_1">
+          <div class="vt-initials">RH</div>
+          <div class="vt-play">▶</div>
+          <div class="vt-duration">2:14</div>
+          <div class="vt-name-bar">R. Harrington — Managing Director, Northgate Advisory</div>
+        </div>
+        <p class="vt-quote">"Three mandates in Q4. Before Executa that would have needed two more hires. The IC Chair Test caught a valuation error before it reached the committee. That feature alone paid for the platform."</p>
+        <div class="vt-attr">
+          <strong>R. Harrington, Managing Director</strong>
+          <span>Northgate Advisory — Boutique M&A, London</span>
+        </div>
+      </div>
+      <div class="video-testi-card reveal">
+        <div class="vt-thumb" data-src="VIDEO_TESTIMONIAL_2">
+          <div class="vt-initials">SC</div>
+          <div class="vt-play">▶</div>
+          <div class="vt-duration">1:58</div>
+          <div class="vt-name-bar">S. Calloway — Partner, Deal Execution, Ravensford Capital</div>
+        </div>
+        <p class="vt-quote">"LP reports used to take five analyst days every quarter. Now they take one afternoon. I stopped writing commentary from zero — I edit down from 100%. We have not replaced the associate who left in January."</p>
+        <div class="vt-attr">
+          <strong>S. Calloway, Partner, Deal Execution</strong>
+          <span>Ravensford Capital — Mid-market PE, £400M AUM</span>
+        </div>
+      </div>
+      <div class="video-testi-card reveal">
+        <div class="vt-thumb" data-src="VIDEO_TESTIMONIAL_3">
+          <div class="vt-initials">TM</div>
+          <div class="vt-play">▶</div>
+          <div class="vt-duration">2:31</div>
+          <div class="vt-name-bar">T. Marchmont — Head of Transaction Execution, Hartley Linden</div>
+        </div>
+        <p class="vt-quote">"The first IC memo Executa produced — I sent it to the partner without editing it. That had never happened with a junior analyst in their first six months. It sounded like us because they had spent two weeks learning what that means."</p>
+        <div class="vt-attr">
+          <strong>T. Marchmont, Head of Transaction Execution</strong>
+          <span>Hartley Linden — Boutique M&A Advisory</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 9: QUALIFICATION ENGINE ===================== -->
+<section id="qualification">
+  <div class="container reveal">
+    <div class="section-label">Is Executa right for your deal team?</div>
+    <h2 style="font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:12px;">Three profiles that fit. One that does not.</h2>
+    <div class="qual-grid">
+      <div class="qual-card fit reveal">
+        <span class="qual-tag">Strong fit</span>
+        <h4>The Mandate Ceiling</h4>
+        <p>Boutique M&A advisory firms running 8 to 20 live mandates per year with 3 to 15 professionals. IC memo production is the bottleneck — the deal team's capacity is spent on document assembly, not mandate origination. You are running at headcount ceiling without wanting to hire another analyst.</p>
+        <ul class="qual-list">
+          <li>5 to 30 deal team professionals</li>
+          <li>IC memo and CIM production is the primary bottleneck</li>
+          <li>Proprietary deal methodology you want to encode</li>
+          <li>Data governance requirements that prevent data leaving the firm</li>
+        </ul>
+      </div>
+      <div class="qual-card fit reveal">
+        <span class="qual-tag">Strong fit</span>
+        <h4>The LP Reporting Drain</h4>
+        <p>Mid-market PE funds with 10 to 30 deal team professionals where LP report production consumes 4 to 8 analyst days per quarter. Portfolio covenant monitoring is manual. The partners know the data is there — getting it into formatted reports is where the time goes.</p>
+        <ul class="qual-list">
+          <li>£100M to £2B AUM</li>
+          <li>Quarterly LP reporting is a significant time cost</li>
+          <li>Active portfolio with 5 to 15 portfolio companies</li>
+          <li>LSEG or PitchBook already in the workflow</li>
+        </ul>
+      </div>
+      <div class="qual-card fit reveal">
+        <span class="qual-tag">Strong fit</span>
+        <h4>The AI Accuracy Fear</h4>
+        <p>Deal teams who have tried Microsoft Copilot, ChatGPT, or a generic AI platform and found the output unreliable for committee-facing documents. You know AI can accelerate the process — but you cannot put a document with a wrong valuation figure in front of your investment committee or your client.</p>
+        <ul class="qual-list">
+          <li>Previously evaluated or used generic AI tools</li>
+          <li>IC accuracy is non-negotiable (committee-facing documents)</li>
+          <li>Want institutional-grade output that reflects your methodology</li>
+          <li>SOC 2 compliance required</li>
+        </ul>
+      </div>
+      <div class="qual-card not-fit reveal">
+        <span class="qual-tag">Not a fit</span>
+        <h4>Bulge Bracket or Large Platform</h4>
+        <p>If your firm has more than 200 deal team professionals, an existing document production team, and an enterprise AI procurement process underway with Rogo or Hebbia already in evaluation — Executa's Forward Deployed Engineering model is not designed for that scale. We are built for boutique and mid-tier advisory firms and PE funds where the MD or Partner makes the technology decision.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 10: REVENUE GAP ===================== -->
+<section id="revenue-gap">
+  <div class="container reveal">
+    <div class="section-label">The cost of the manual workflow</div>
+    <h2 style="font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:40px;">Every month without Executa costs your deal team more than the platform costs to deploy.</h2>
+    <div class="rev-gap-grid">
+      <div>
+        <div class="rev-figure">£150,000</div>
+        <div class="rev-caption">Recoverable deal team capacity per year — for a boutique advisory firm running 5 mandates per quarter at £1,500 to £3,000 per hour billing rate. 20 analyst hours saved per mandate × 20 mandates = 400 hours returned to origination, client management, and deal execution.</div>
+        <br>
+        <div class="rev-figure" style="font-size:clamp(36px,5vw,60px);color:var(--danger);">£270,000</div>
+        <div class="rev-caption" style="color:var(--danger)">Maximum delayed ARR for a PE fund or advisory firm that waits 90 days to systematise deal workflow AI — measured at 3 missed firm-wins at £90,000 ACV per year.</div>
+      </div>
+      <div class="rev-breakdown">
+        <div class="rev-line reveal">
+          <span class="rev-label">IC memo: manual cost per deal</span>
+          <span class="rev-val">£30,000–£60,000</span>
+        </div>
+        <div class="rev-line reveal">
+          <span class="rev-label">LP reports: analyst days per quarter</span>
+          <span class="rev-val">4–8 days × 4</span>
+        </div>
+        <div class="rev-line reveal">
+          <span class="rev-label">Deal team capacity recovered per year</span>
+          <span class="rev-val">£150,000–£300,000</span>
+        </div>
+        <div class="rev-line reveal">
+          <span class="rev-label">Analyst hire avoided (Executa vs headcount)</span>
+          <span class="rev-val">£80,000–£120,000</span>
+        </div>
+        <div class="rev-line reveal">
+          <span class="rev-label">Executa platform cost (proxy, per firm per year)</span>
+          <span class="rev-val">£32,000–£90,000</span>
+        </div>
+        <div class="rev-line reveal" style="border-color:var(--accent-glow);background:var(--accent-soft);">
+          <span class="rev-label" style="color:var(--text);font-weight:700;">Net deal team gain in year one</span>
+          <span class="rev-val" style="color:var(--accent2);">£60,000–£210,000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 11: OFFER ===================== -->
+<section id="offer">
+  <div class="container reveal">
+    <div class="section-label">What is included</div>
+    <h2>Everything included with Executa.</h2>
+    <p style="color:var(--text-muted);font-size:17px;margin-top:8px;max-width:600px;">Every component of Executa is built for the boutique and mid-tier deal team. Nothing is generic. Everything reflects your methodology.</p>
+    <div class="offer-grid">
+      <div class="offer-card reveal">
+        <div class="offer-icon">📋</div>
+        <h4>IC Memo Generation</h4>
+        <p>Investment committee memos produced in your firm's structure, language, and methodology. IC Chair Test validates every output before the committee pack is assembled.</p>
+        <div class="offer-without">Without this: 15 to 40 analyst hours per IC memo. At £1,500 to £3,000 per hour in advisory billing, that is £30,000 to £60,000 in deal team capacity spent on formatting.</div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">📊</div>
+        <h4>LBO Model Builder</h4>
+        <p>Full leveraged buyout model built from deal inputs in 3 minutes. LSEG and PitchBook comparable transaction data pulled in automatically. Returns, sensitivities, and debt structures modelled to institutional standard.</p>
+        <div class="offer-without">Without this: 4 to 8 analyst hours per LBO model. When three mandates are in-process simultaneously, the modelling queue becomes the mandate bottleneck.</div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">📁</div>
+        <h4>CIM and Management Presentation</h4>
+        <p>CIM and management presentation production in your advisory firm's voice. Deal teaser to full CIM. No generic AI formatting — every section reflects the firm's presentation standards.</p>
+        <div class="offer-without">Without this: 2 to 3 senior analyst days per CIM. A competitor advisory firm using Executa can get the CIM to market 3 days faster — and in a process driven by timing, that matters.</div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">🔍</div>
+        <h4>DD Report Compilation</h4>
+        <p>Due diligence report assembled from diligence inputs — financial, commercial, operational. Structured to your firm's DD methodology. Ready for client delivery or committee submission.</p>
+        <div class="offer-without">Without this: DD report assembly consumes 30 to 60 analyst hours per deal. The hours exist — they are just being spent on formatting, not analysis.</div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">📈</div>
+        <h4>LP Reporting Automation</h4>
+        <p>Quarterly LP reports generated from portfolio data. Partners review and edit — they do not draft from zero. LP commentary written in the fund's voice. Portfolio companies updated automatically from monitoring data.</p>
+        <div class="offer-without">Without this: 4 to 8 analyst days per quarter on LP report production. For a fund with 15 LP relationships, quarterly reporting is a significant capacity drain — every quarter, year after year.</div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">🔒</div>
+        <h4>Forward Deployed Engineering</h4>
+        <p>Executa engineers embed with your firm for two weeks during onboarding. They encode your exact IC memo structure, deal language, valuation approach, and document standards. The platform outputs your methodology — not generic AI.</p>
+        <div class="offer-without">Without this: Generic AI output that requires heavy editing before it is client-ready. The editing overhead often takes longer than drafting manually.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 12: IMPLEMENTATION ===================== -->
+<section id="implementation">
+  <div class="container reveal">
+    <div class="section-label">What changes in the first 90 days</div>
+    <h2 style="font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;">From mandate inputs to institutional output in two weeks.</h2>
+    <p style="color:var(--text-muted);font-size:17px;max-width:600px;">Executa is not a software subscription you deploy on a Tuesday and figure out on Friday. It is an institutional platform embedded by engineers who understand deal workflows.</p>
+    <div class="impl-timeline">
+      <div class="impl-item reveal">
+        <div class="impl-period">Week 1–2</div>
+        <div class="impl-content">
+          <h4>Forward Deployed Engineering Embed</h4>
+          <p>Executa engineers work inside your firm's environment. They map your IC memo structure, deal language, valuation methodology, and document standards. Your firm's methodology is encoded into the platform before you produce a single output.</p>
+        </div>
+      </div>
+      <div class="impl-item reveal">
+        <div class="impl-period">Week 3–4</div>
+        <div class="impl-content">
+          <h4>First Live Mandate Run</h4>
+          <p>Your first IC memo, LBO model, or CIM produced through Executa on a live mandate. The deal team reviews the output against your standard. Adjustments encoded. The IC Chair Test runs on the first real committee pack. Partners review what comes out — not what goes in.</p>
+        </div>
+      </div>
+      <div class="impl-item reveal">
+        <div class="impl-period">Days 30–60</div>
+        <div class="impl-content">
+          <h4>Full Workflow Integration</h4>
+          <p>All six workflow areas operational: Deal Intelligence and Model Builder, IC memo generation, LP reporting, portfolio covenant monitoring, CIM production, DD report compilation. LSEG and PitchBook integrated. Analysts using Executa on every active mandate.</p>
+        </div>
+      </div>
+      <div class="impl-item reveal">
+        <div class="impl-period">Day 90</div>
+        <div class="impl-content">
+          <h4>Methodology Refinement and Scale</h4>
+          <p>Three months of deal data encoded in the platform. Output accuracy at committee standard. The deal team is spending zero time on document formatting and 100% on mandate origination, client management, and execution. At this point, the platform is a permanent part of the deal workflow — not a pilot.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 13: FAQ ===================== -->
+<section id="faq">
+  <div class="container reveal">
+    <div class="section-label">Frequently asked questions</div>
+    <h2 style="font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;">The questions deal teams ask before deploying Executa.</h2>
+    <p style="color:var(--text-muted);font-size:17px;max-width:600px;">These are not hypothetical objections. These are the real concerns that PE Partners and M&A MDs raise in every evaluation.</p>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-q">What if the IC memo has a wrong number? Our investment committee cannot see a document with an incorrect valuation figure.</div>
+        <div class="faq-a">This is the right question. The IC Chair Test was built specifically for this concern. Every IC memo produced by Executa is checked against investment committee quality standards before it reaches the committee pack — accuracy, internal consistency, valuation methodology, and quantitative claims. Executa's encoded methodology means the model is working from your firm's own logic, not a generic LLM's interpretation of PE deal standards. No competitor offers this. It is the core product decision that separates Executa from Rogo, Hebbia, and Glean.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">We have strict data governance requirements. Our deal data cannot leave the firm's environment.</div>
+        <div class="faq-a">Executa operates entirely inside the client's data environment. Nothing leaves. SOC 2 Type II certified. EU data residency available for UK and European firms. The Forward Deployed Engineering embed means Executa engineers work inside your systems — your data never touches external infrastructure. This is a non-negotiable requirement for every firm Executa works with. It is also one of the reasons firms choose Executa over cloud-first competitors.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">We tried a platform before and the output did not sound like us. Our clients would notice immediately.</div>
+        <div class="faq-a">Generic AI output that does not reflect a firm's methodology is the most common reason advisory firms reject AI platforms after a pilot. Executa is specifically designed to solve this. Forward Deployed Engineering means two weeks of your engineers embedding with Executa — encoding your IC memo structure, your deal language, your valuation approach, your document standards. The output does not sound like generic AI because it is built from your firm's own methodology. The first IC memo a new client sees from Executa is closer to their own standard than most AI platforms get after six months of prompting.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">How long does it take to get Executa operational on a live mandate?</div>
+        <div class="faq-a">Two weeks for the Forward Deployed Engineering embed. Your first live mandate run happens in week 3 or 4. Full workflow integration — all six workflow areas, LSEG and PitchBook connected, IC Chair Test live — by day 60. At day 90, the platform is producing institutional-grade deal documents on every active mandate. There is no 6-month implementation timeline. The deal team is producing faster within the first mandate cycle.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">The product sells itself when people see it. Why do we need to change our current process?</div>
+        <div class="faq-a">This is exactly right — and it is also the constraint. Every mid-market PE fund and boutique advisory firm that has seen Executa in a live demo has asked for a pilot. The question is not whether the product sells itself. It is how many demos are being run per month, and how many of those demo recipients are the right Partners and MDs. Executa's current clients are all firms where a co-founder had a direct relationship. The 200 to 300 UK and European boutique advisory firms and mid-market PE funds that fit the ICP have not seen a demo yet. That is the gap — not product quality.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 14: GUARANTEE ===================== -->
+<section id="guarantee">
+  <div class="container reveal">
+    <div class="guarantee-box">
+      <div class="guarantee-badge">
+        <span>★</span> Executa Deployment Guarantee
+      </div>
+      <h3>If your first IC memo does not pass internal committee review — we rebuild the encoding until it does.</h3>
+      <p>The Forward Deployed Engineering embed is the delivery mechanism. If the first IC memo produced through Executa does not meet your firm's quality standard — not a committee-facing version, not a client-facing version, your internal bar — Executa engineers return and re-encode until it does. This guarantee is why the two-week embed matters. Executa does not leave until the output is right. The IC Chair Test is the quality gate. The encoding is the delivery mechanism. Both carry the guarantee.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 15: FINAL CTA ===================== -->
+<section id="final-cta">
+  <div class="final-cta-inner reveal">
+    <div class="cost-line">Every mandate cycle without Executa: £30,000–£60,000 in analyst time spent on formatting, not deal origination.</div>
+    <h2>Your deal team spends its time on <span class="highlight">mandates.</span><br>Not IC memos.</h2>
+    <p>Book a demo. Executa engineers will walk you through an IC memo built from your firm's methodology — live, on a deal scenario of your choice. From mandate inputs to committee-ready document. You will see exactly what the IC Chair Test catches and why Forward Deployed Engineering produces a different quality of output than any other platform in this space.</p>
+    <a href="#" class="cta-btn">Book a Demo</a>
+    <div class="cta-sub">No generic pitch deck. No sales team follow-up sequence. A working demonstration on a deal scenario your deal team actually runs.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-attribution">
+    This is a mockup of what an Executa customer acquisition page could look like for the PE and M&A deal team segment. Strategy and mockup prepared by Jean Mundabi Fala, MDB Growth Capital.
+  </div>
+</footer>
+
+<!-- SCROLL REVEAL -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if(el.isIntersecting) { el.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

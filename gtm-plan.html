@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executa — GTM Plan · MDB Growth Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#08080f; --bg2:#0e0e1a; --bg3:#141420; --bg4:#1c1c2c;
+    --border:rgba(255,255,255,0.07);
+    --accent:#c9a227; --accent2:#e0b840;
+    --accent-soft:rgba(201,162,39,0.10); --accent-glow:rgba(201,162,39,0.20);
+    --text:#f0ede8; --text-muted:#8b8ba0; --text-dim:#4a4a60;
+    --success:#22c55e; --danger:#ef4444; --warning:#f59e0b;
+    --font:'Space Grotesk',system-ui,sans-serif;
+    --mono:'Space Mono',monospace;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.75;}
+  .container{max-width:1100px;margin:0 auto;padding:0 48px;}
+
+  header{
+    padding:20px 48px;
+    background:var(--bg2);
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .header-brand{font-size:13px;font-weight:800;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;}
+  .header-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+
+  .page-hero{
+    padding:60px 48px 48px;
+    max-width:1100px;margin:0 auto;
+  }
+  .page-tag{
+    display:inline-block;
+    background:var(--accent-soft);border:1px solid var(--accent-glow);
+    color:var(--accent2);padding:5px 14px;border-radius:4px;
+    font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .page-hero h1{
+    font-size:clamp(28px,3.5vw,44px);
+    font-weight:800;line-height:1.15;letter-spacing:-1.5px;
+    color:var(--text);margin-bottom:12px;
+  }
+  .page-hero p{font-size:16px;color:var(--text-muted);max-width:620px;line-height:1.7;}
+
+  section{padding:48px 0;border-top:1px solid var(--border);}
+  h2{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-0.5px;margin-bottom:8px;}
+  .sec-sub{font-size:14px;color:var(--text-muted);margin-bottom:28px;max-width:560px;line-height:1.6;}
+  .sec-tag{
+    display:inline-block;
+    background:var(--accent-soft);border:1px solid var(--accent-glow);
+    color:var(--accent2);padding:4px 12px;border-radius:4px;
+    font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    margin-bottom:12px;
+  }
+
+  /* PILLARS */
+  .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:4px;}
+  .pillar{
+    background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;
+    position:relative;overflow:hidden;
+  }
+  .pillar::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);
+  }
+  .pillar .p-num{
+    font-size:32px;font-weight:900;color:var(--accent);opacity:0.25;
+    font-family:var(--mono);line-height:1;margin-bottom:8px;
+  }
+  .pillar h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;}
+  .pillar p{font-size:13px;color:var(--text-muted);line-height:1.5;margin:0;}
+  .pillar .p-kpi{
+    font-size:11px;font-weight:700;color:var(--accent2);
+    margin-top:12px;text-transform:uppercase;letter-spacing:0.5px;
+  }
+
+  /* 10-DAY TABLE */
+  .day-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .day-table th{
+    text-align:left;padding:10px 14px;
+    font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;
+    color:var(--text-dim);border-bottom:1px solid var(--border);background:var(--bg3);
+  }
+  .day-table td{
+    padding:11px 14px;border-bottom:1px solid var(--border);
+    color:var(--text-muted);vertical-align:top;line-height:1.5;
+  }
+  .day-table tr:last-child td{border-bottom:none;}
+  .day-label{font-weight:800;color:var(--accent2);white-space:nowrap;font-family:var(--mono);font-size:12px;}
+  .channel-tag{
+    display:inline-block;padding:2px 7px;border-radius:4px;
+    font-size:10px;font-weight:700;text-transform:uppercase;
+    margin-right:4px;margin-bottom:2px;
+  }
+  .ct-email{background:rgba(201,162,39,0.12);color:var(--accent2);}
+  .ct-linkedin{background:rgba(34,197,94,0.10);color:#22c55e;}
+  .ct-content{background:rgba(99,102,241,0.12);color:#818cf8;}
+  .ct-prep{background:rgba(239,68,68,0.10);color:#ef4444;}
+
+  /* 12-WEEK ROADMAP */
+  .roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .road-card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px;
+  }
+  .road-card .rk-label{
+    font-size:10px;font-weight:800;color:var(--accent2);
+    text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;
+  }
+  .road-card h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px;}
+  .road-card ul{padding-left:16px;}
+  .road-card li{font-size:13px;color:var(--text-muted);line-height:1.7;}
+
+  /* KPIs */
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .kpi-card{
+    background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;
+    text-align:center;
+  }
+  .kpi-card .kv{
+    font-size:28px;font-weight:900;color:var(--accent2);
+    font-family:var(--mono);line-height:1;margin-bottom:4px;
+  }
+  .kpi-card .kl{font-size:12px;color:var(--text-muted);line-height:1.4;}
+
+  /* TOOL TAGS */
+  .tool-stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .tool-tag{
+    background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+    padding:4px 12px;font-size:12px;color:var(--text-muted);
+  }
+  .tool-tag.primary{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent2);font-weight:700;}
+
+  @media(max-width:768px){
+    .container,.page-hero,header{padding-left:20px;padding-right:20px;}
+    .pillars,.roadmap,.kpi-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-brand">Executa — GTM Plan</div>
+    <div class="header-sub">Prepared by Jean Mundabi Fala · MDB Growth Capital · May 2026</div>
+  </div>
+  <div style="font-size:12px;color:var(--text-muted);">For: Mathew, Co-founder</div>
+</header>
+
+<div class="page-hero">
+  <div class="page-tag">Go-to-Market Plan · BD Mode · 2026</div>
+  <h1>Executa GTM Plan:<br>5 Pillars · 10-Day Launch · 12-Week Roadmap</h1>
+  <p>A systematic plan to take Executa from founder-led sales to a repeatable acquisition channel reaching 200 boutique M&A advisory and mid-market PE firms across the UK and Europe.</p>
+</div>
+
+<div class="container">
+
+  <!-- PILLARS -->
+  <section>
+    <div class="sec-tag">GTM Pillars</div>
+    <h2>Five Pillars of the Acquisition System</h2>
+    <p class="sec-sub">Each pillar represents a distinct acquisition mechanism. Pillar 1 and 2 are activated first — they create the pipeline that feeds pillars 3, 4, and 5.</p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="p-num">01</div>
+        <h4>PE Deal Team Mapping</h4>
+        <p>200 verified UK and European mid-market PE funds (£200M to £1B AUM) with named Partners and Investment Directors. Buying signal: analyst hiring (proxy for live deal flow). ICP score per firm.</p>
+        <div class="p-kpi">Primary ICP · Activate First</div>
+      </div>
+      <div class="pillar">
+        <div class="p-num">02</div>
+        <h4>M&A Boutique Advisor Channel</h4>
+        <p>Rothschild tier B and below: boutique advisory firms with 5 to 50 professionals running 10 to 30 mandates per year. Decision-maker: MD or Partner who personally writes IC memos.</p>
+        <div class="p-kpi">Secondary ICP · Activate Week 2</div>
+      </div>
+      <div class="pillar">
+        <div class="p-num">03</div>
+        <h4>Fund Close Timing Trigger</h4>
+        <p>PE firms 12 to 18 months into a new fund are in peak deal sourcing mode. Companies House confirmation statement filing dates proxy for fund vintage and sourcing calendar. These firms are in their highest-velocity deal window.</p>
+        <div class="p-kpi">Signal Trigger · Companies House</div>
+      </div>
+      <div class="pillar">
+        <div class="p-num">04</div>
+        <h4>Analyst Replacement ROI Channel</h4>
+        <p>Firms that recently posted or hired a junior analyst for deal screening are experiencing exactly the pain Executa solves. Job board activity (LinkedIn, Reed, eFinancialCareers) is the signal. These firms are the warmest entry point in the target universe.</p>
+        <div class="p-kpi">Timing Signal · Job Board Data</div>
+      </div>
+      <div class="pillar">
+        <div class="p-num">05</div>
+        <h4>Content and Authority Engine</h4>
+        <p>Mathew's LinkedIn profile becomes the trust-building channel for PE Partners and M&A MDs over 18 months. 2 to 3 posts per week on deal workflow intelligence. 20-week value-only nurture sequence. The Authority Engine converts the 95 percent not-ready market into a 24-month pipeline.</p>
+        <div class="p-kpi">Authority Engine Score: 6/7 · RECOMMENDED</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10-DAY TABLE -->
+  <section>
+    <div class="sec-tag">10-Day Launch Sequence</div>
+    <h2>Days 1 to 10 — What Happens and When</h2>
+    <p class="sec-sub">The critical first 10 days from programme launch to first qualified conversations. Every day has a specific deliverable and outcome.</p>
+    <table class="day-table">
+      <thead>
+        <tr>
+          <th style="width:80px;">Day</th>
+          <th>Activity</th>
+          <th>Channel</th>
+          <th>Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="day-label">Day 1</td>
+          <td>ICP definition and segment scoring. Confirm primary ICP (mid-market PE) and secondary ICP (boutique M&A advisory). Map buying signal criteria per segment.</td>
+          <td><span class="channel-tag ct-prep">Prep</span></td>
+          <td>ICP scorecard. Segment definitions. Signal criteria list.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 2</td>
+          <td>Start account list build — Tier 1 (boutique M&A advisory). Pull UK advisory firms from Companies House + LinkedIn. Verify MD and Partner contacts. Score against ICP criteria.</td>
+          <td><span class="channel-tag ct-prep">Research</span></td>
+          <td>Tier 1 draft: 80 to 100 firms with contact data.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 3</td>
+          <td>Account list build — Tier 2 (mid-market PE). Pull UK PE funds from Preqin signals + LinkedIn. Identify analyst hiring firms (job board scan). Score and rank by ICP fit.</td>
+          <td><span class="channel-tag ct-prep">Research</span></td>
+          <td>Tier 2 draft: 80 to 100 firms. Combined list: 200 firms.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 4</td>
+          <td>Sequence build — Email 1 (Trigger angle). Personalise to Tier 1 segment: boutique advisory founder-led sales ceiling frame. Review and finalise. PSS check (target 85+).</td>
+          <td><span class="channel-tag ct-email">Email</span></td>
+          <td>Email 1 final. Subject: Jefferies. Lazard. Rothschild.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 5</td>
+          <td>Sequence build — Email 2 (Friction angle). Mid-market gap frame. Rogo Series D context. Urgency: 12-month evaluation window. LinkedIn sequence (connect, follow-up, breakup).</td>
+          <td><span class="channel-tag ct-email">Email</span><span class="channel-tag ct-linkedin">LinkedIn</span></td>
+          <td>Email 2 final. LinkedIn 3-step sequence.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 6</td>
+          <td>HubSpot setup. Pipeline stages configured: Cold → Replied → Demo Booked → Demo Done → Pilot Signed. Lead import from verified contact list. Sequence integration.</td>
+          <td><span class="channel-tag ct-prep">CRM</span></td>
+          <td>HubSpot pipeline live. 200 contacts imported.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 7</td>
+          <td>Deliverability check. SPF, DKIM, DMARC verified. Domain warm-up status checked. Spam word audit on all emails. Test sends to seed inboxes.</td>
+          <td><span class="channel-tag ct-email">Email</span></td>
+          <td>Deliverability report. Green light or action items.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 8</td>
+          <td>Review call with Mathew. Walk through account list, sequences, and HubSpot setup. Approve or adjust. Confirm sending schedule and daily volume (target: 10 to 20 per day).</td>
+          <td><span class="channel-tag ct-prep">Review</span></td>
+          <td>Final approval. Launch ready.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 9</td>
+          <td>Launch Tier 1 wave (boutique M&A advisory). First 20 firms. Email 1 sent. LinkedIn connect requests sent in parallel. Monitor for early replies.</td>
+          <td><span class="channel-tag ct-email">Email</span><span class="channel-tag ct-linkedin">LinkedIn</span></td>
+          <td>Wave 1 live. 20 firms contacted. Monitoring active.</td>
+        </tr>
+        <tr>
+          <td class="day-label">Day 10</td>
+          <td>First reply scan. Qualify early replies (genuine intent vs polite curiosity vs objection). Flag warm prospects for Mathew. Launch Tier 2 wave (mid-market PE) in parallel.</td>
+          <td><span class="channel-tag ct-email">Email</span><span class="channel-tag ct-prep">QA</span></td>
+          <td>First warm prospects identified. Tier 2 wave launched.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 12-WEEK ROADMAP -->
+  <section>
+    <div class="sec-tag">12-Week Roadmap</div>
+    <h2>Month by Month — What Gets Built and What Gets Measured</h2>
+    <p class="sec-sub">Three 30-day phases. Each phase builds on the one before. At the end of 90 days, Executa has a working acquisition system the sales hire can run independently.</p>
+    <div class="roadmap">
+      <div class="road-card">
+        <div class="rk-label">Month 1 · Weeks 1–4</div>
+        <h4>Foundation and Launch</h4>
+        <ul>
+          <li>200-firm account list completed and verified</li>
+          <li>Email sequences (Trigger + Friction) live</li>
+          <li>LinkedIn sequence active on Mathew's profile</li>
+          <li>HubSpot pipeline configured and populated</li>
+          <li>First 60 to 80 firms contacted</li>
+          <li>First 5 to 10 replies received and qualified</li>
+          <li>2 to 3 demos booked from first wave</li>
+          <li>Authority Engine content calendar drafted (if approved)</li>
+        </ul>
+      </div>
+      <div class="road-card">
+        <div class="rk-label">Month 2 · Weeks 5–8</div>
+        <h4>Scale and Optimise</h4>
+        <ul>
+          <li>Wave 2: Next 80 firms contacted</li>
+          <li>Winning subject line and opening variant identified from reply data</li>
+          <li>ICP refined based on who is replying (boutique vs PE, deal size)</li>
+          <li>10 to 20 qualified conversations in progress</li>
+          <li>5 to 10 live demos with PE Partners and M&A MDs</li>
+          <li>First Authority Engine posts live on Mathew's LinkedIn (if approved)</li>
+          <li>Reference call programme activated from existing client base</li>
+          <li>Weekly pipeline report to Mathew and co-founders</li>
+        </ul>
+      </div>
+      <div class="road-card">
+        <div class="rk-label">Month 3 · Weeks 9–12</div>
+        <h4>Convert and Systematise</h4>
+        <ul>
+          <li>Wave 3: Final 40 to 60 firms contacted</li>
+          <li>3 to 5 signed pilots from outbound programme</li>
+          <li>First named case study drafted from new client cohort</li>
+          <li>Referral trigger sequence activated (30-day post-onboarding)</li>
+          <li>Sales hire handover: full system documentation</li>
+          <li>HubSpot training for sales hire and co-founders</li>
+          <li>SuperReturn 2026 (June) pipeline identified for conference follow-up</li>
+          <li>90-day retrospective and ICP refinement session</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- KPIs -->
+  <section>
+    <div class="sec-tag">Key Performance Indicators</div>
+    <h2>What Gets Measured</h2>
+    <p class="sec-sub">Six metrics that tell you whether the programme is working. Reviewed weekly with Mathew. Reported monthly to the founding team.</p>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kv">3–5%</div>
+        <div class="kl">Target reply rate (benchmark: 1.5 to 2% for this segment)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kv">30%</div>
+        <div class="kl">Reply to demo conversion target</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kv">25%</div>
+        <div class="kl">Demo to pilot conversion target</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kv">£150K</div>
+        <div class="kl">Minimum new ARR from pilot pipeline (90 days)</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;">
+      <div class="kpi-card" style="text-align:left;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;display:inline-block;width:100%;">
+        <strong style="font-size:13px;color:var(--text);">Additional metrics tracked:</strong>
+        <div class="tool-stack">
+          <span class="tool-tag">Sequence open rate (target: 45%+)</span>
+          <span class="tool-tag">LinkedIn connection accept rate (target: 25%+)</span>
+          <span class="tool-tag">Demo show rate (target: 85%+)</span>
+          <span class="tool-tag">Pilot close rate (target: 40%+)</span>
+          <span class="tool-tag">Days from first contact to demo (target: under 14)</span>
+          <span class="tool-tag">Referrals per onboarded client (target: 2+)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section style="border-bottom:none;">
+    <div class="sec-tag">Tool Stack</div>
+    <h2>Tech Stack for This Programme</h2>
+    <p class="sec-sub">Every tool is either free, low-cost, or already in Executa's stack. No enterprise software required for the 90-day pilot.</p>
+    <div class="tool-stack">
+      <span class="tool-tag primary">HubSpot (CRM + sequences)</span>
+      <span class="tool-tag primary">LinkedIn Sales Navigator</span>
+      <span class="tool-tag">SmartLead or Instantly (email sending)</span>
+      <span class="tool-tag">Companies House API (UK firm signals)</span>
+      <span class="tool-tag">Apollo or Prospeo (contact enrichment)</span>
+      <span class="tool-tag">LinkedIn (Mathew's personal profile)</span>
+      <span class="tool-tag">Preqin or Pitchbook (PE firm signals)</span>
+      <span class="tool-tag">eFinancialCareers + Reed (analyst hiring signals)</span>
+      <span class="tool-tag">Cal.com (demo booking)</span>
+    </div>
+    <p style="font-size:12px;color:var(--text-dim);margin-top:24px;">Strategy and GTM research by Jean Mundabi Fala · MDB Growth Capital · 2026</p>
+  </section>
+
+</div><!-- /container -->
+</body>
+</html>

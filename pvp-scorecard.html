@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executa — Deal Team AI Readiness Scorecard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08080f;
+    --bg2: #0e0e1a;
+    --bg3: #141420;
+    --bg4: #1c1c2c;
+    --border: rgba(255,255,255,0.07);
+    --accent: #c9a227;
+    --accent2: #e0b840;
+    --accent-soft: rgba(201,162,39,0.10);
+    --accent-glow: rgba(201,162,39,0.20);
+    --text: #f0ede8;
+    --text-muted: #8b8ba0;
+    --text-dim: #4a4a60;
+    --success: #22c55e;
+    --success-soft: rgba(34,197,94,0.10);
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --font: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:16px; line-height:1.7; min-height:100vh; display:flex; flex-direction:column; align-items:center; }
+
+  header {
+    width:100%; padding:20px 40px;
+    background:rgba(8,8,15,0.95); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    position:sticky; top:0; z-index:10;
+  }
+  .header-logo {
+    font-size:14px; font-weight:800; color:var(--accent2);
+    letter-spacing:1px; text-transform:uppercase;
+  }
+  .header-sub { font-size:11px; color:var(--text-muted); margin-top:2px; }
+
+  .quiz-wrap {
+    width:100%; max-width:680px;
+    padding:48px 32px 80px;
+  }
+
+  /* INTRO */
+  .intro-section { text-align:center; padding:24px 0 40px; }
+  .quiz-tag {
+    display:inline-block;
+    background:var(--accent-soft); border:1px solid var(--accent-glow);
+    color:var(--accent2); padding:5px 14px; border-radius:4px;
+    font-size:10.5px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:20px;
+  }
+  .intro-section h1 {
+    font-size:32px; font-weight:800; line-height:1.2;
+    letter-spacing:-1px; color:var(--text); margin-bottom:14px;
+  }
+  .intro-section h1 span { color:var(--accent2); }
+  .intro-section p {
+    font-size:15px; color:var(--text-muted);
+    max-width:500px; margin:0 auto 28px; line-height:1.7;
+  }
+  .intro-meta {
+    display:flex; gap:24px; justify-content:center; flex-wrap:wrap;
+    font-size:12px; color:var(--text-dim);
+  }
+
+  /* PROGRESS */
+  .progress-wrap { margin-bottom:32px; }
+  .progress-label {
+    display:flex; justify-content:space-between;
+    font-size:12px; color:var(--text-muted); margin-bottom:8px; font-weight:600;
+  }
+  .progress-bar-bg {
+    height:4px; background:var(--bg3); border-radius:2px; overflow:hidden;
+  }
+  .progress-bar-fill {
+    height:100%; background:var(--accent);
+    border-radius:2px; transition:width 0.4s ease;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:14px; padding:32px; margin-bottom:24px;
+    display:none;
+  }
+  .question-card.active { display:block; animation:fadeIn 0.3s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+  .q-num {
+    font-size:11px; font-weight:800; color:var(--accent2);
+    text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;
+  }
+  .q-text {
+    font-size:18px; font-weight:700; color:var(--text);
+    line-height:1.4; margin-bottom:24px;
+  }
+
+  .options { display:flex; flex-direction:column; gap:10px; }
+  .option {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:10px; padding:14px 18px;
+    cursor:pointer; transition:all 0.15s;
+    display:flex; align-items:center; gap:14px;
+    font-size:14.5px; color:var(--text-muted);
+  }
+  .option:hover { border-color:var(--accent-glow); color:var(--text); background:var(--bg4); }
+  .option.selected {
+    border-color:var(--accent); background:var(--accent-soft);
+    color:var(--text);
+  }
+  .option-key {
+    width:28px; height:28px; border-radius:6px;
+    background:var(--bg4); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:800; color:var(--text-muted);
+    flex-shrink:0; font-family:var(--mono);
+    transition:all 0.15s;
+  }
+  .option.selected .option-key {
+    background:var(--accent); color:#08080f; border-color:var(--accent);
+  }
+
+  .q-nav {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top:24px;
+  }
+  .btn-next {
+    background:var(--accent); color:#08080f;
+    border:none; border-radius:8px;
+    padding:11px 28px; font-size:14px; font-weight:800;
+    cursor:pointer; transition:background 0.15s;
+    font-family:var(--font); text-transform:uppercase; letter-spacing:0.5px;
+  }
+  .btn-next:hover { background:var(--accent2); }
+  .btn-next:disabled { background:var(--bg3); color:var(--text-dim); cursor:not-allowed; }
+  .btn-back {
+    background:transparent; color:var(--text-muted);
+    border:1px solid var(--border); border-radius:8px;
+    padding:10px 20px; font-size:13px; font-weight:600;
+    cursor:pointer; transition:all 0.15s; font-family:var(--font);
+  }
+  .btn-back:hover { color:var(--text); border-color:var(--accent-glow); }
+
+  /* EMAIL GATE */
+  #email-gate {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:14px; padding:36px; text-align:center;
+    display:none;
+  }
+  #email-gate h3 { font-size:22px; font-weight:800; color:var(--text); margin-bottom:10px; }
+  #email-gate p { font-size:14px; color:var(--text-muted); margin-bottom:24px; line-height:1.6; }
+  .email-form { display:flex; flex-direction:column; gap:12px; max-width:380px; margin:0 auto; }
+  .email-form input {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:8px; padding:13px 16px;
+    font-size:14px; color:var(--text); font-family:var(--font);
+    outline:none; transition:border-color 0.15s;
+  }
+  .email-form input:focus { border-color:var(--accent); }
+  .email-form input::placeholder { color:var(--text-dim); }
+  .btn-reveal {
+    background:var(--accent); color:#08080f;
+    border:none; border-radius:8px;
+    padding:13px 28px; font-size:14px; font-weight:800;
+    cursor:pointer; transition:background 0.15s; font-family:var(--font);
+    text-transform:uppercase; letter-spacing:0.5px;
+  }
+  .btn-reveal:hover { background:var(--accent2); }
+  .privacy-note { font-size:11px; color:var(--text-dim); margin-top:8px; }
+
+  /* RESULTS */
+  #results-section { display:none; }
+
+  /* DIAL */
+  .dial-container { text-align:center; margin-bottom:32px; }
+  .dial-svg { display:block; margin:0 auto; }
+  .score-display {
+    font-size:52px; font-weight:900; color:var(--accent2);
+    font-family:var(--mono); line-height:1; margin-top:-8px;
+  }
+  .score-label { font-size:14px; color:var(--text-muted); margin-top:6px; }
+
+  /* RESULT CARD */
+  .result-card {
+    border-radius:14px; padding:28px; margin-bottom:20px;
+    border:1px solid var(--border);
+  }
+  .result-card.ready {
+    background:rgba(34,197,94,0.07);
+    border-color:rgba(34,197,94,0.25);
+  }
+  .result-card.partial {
+    background:rgba(245,158,11,0.07);
+    border-color:rgba(245,158,11,0.25);
+  }
+  .result-card.early {
+    background:rgba(239,68,68,0.07);
+    border-color:rgba(239,68,68,0.2);
+  }
+  .result-card h3 { font-size:20px; font-weight:800; color:var(--text); margin-bottom:8px; }
+  .result-card p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+  .result-tag {
+    display:inline-block; padding:4px 12px; border-radius:4px;
+    font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:1px;
+    margin-bottom:12px;
+  }
+  .tag-ready { background:var(--success-soft); color:var(--success); }
+  .tag-partial { background:rgba(245,158,11,0.12); color:var(--warning); }
+  .tag-early { background:rgba(239,68,68,0.12); color:var(--danger); }
+
+  /* SCORE BREAKDOWN */
+  .breakdown {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:12px; overflow:hidden; margin-bottom:24px;
+  }
+  .breakdown-header {
+    padding:14px 20px; border-bottom:1px solid var(--border);
+    font-size:11px; font-weight:800; letter-spacing:1px;
+    text-transform:uppercase; color:var(--text-muted);
+    background:var(--bg3);
+  }
+  .breakdown-item {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 20px; border-bottom:1px solid var(--border);
+    font-size:13.5px;
+  }
+  .breakdown-item:last-child { border-bottom:none; }
+  .breakdown-item .dim { color:var(--text-muted); }
+  .breakdown-item .points {
+    font-weight:700; font-family:var(--mono); font-size:14px;
+    color:var(--accent2);
+  }
+
+  /* CTA */
+  .result-cta {
+    background:linear-gradient(135deg, #1a1408, #2a200a);
+    border:1px solid var(--accent-glow); border-radius:12px;
+    padding:28px; text-align:center; margin-top:8px;
+  }
+  .result-cta h4 { font-size:18px; font-weight:800; color:var(--text); margin-bottom:8px; }
+  .result-cta p { font-size:13.5px; color:var(--text-muted); margin-bottom:20px; }
+  .btn-cta {
+    display:inline-block; background:var(--accent); color:#08080f;
+    padding:12px 28px; border-radius:8px; text-decoration:none;
+    font-size:14px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;
+    transition:background 0.15s;
+  }
+  .btn-cta:hover { background:var(--accent2); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-logo">Executa — Deal Team AI Readiness</div>
+    <div class="header-sub">8 questions · 4 minutes · Personalised score and action plan</div>
+  </div>
+  <div style="font-size:12px;color:var(--text-muted);">Prepared by MDB Growth Capital</div>
+</header>
+
+<div class="quiz-wrap">
+
+  <!-- INTRO -->
+  <div class="intro-section" id="intro-section">
+    <div class="quiz-tag">Interactive Scorecard</div>
+    <h1>How AI-Ready Is Your<br><span>Deal Workflow?</span></h1>
+    <p>Eight questions that tell you exactly where your firm is in the AI adoption curve — and which workflow automation you should prioritise first. Developed from analysis of 200+ boutique M&A advisory and mid-market PE firms.</p>
+    <div class="intro-meta">
+      <span>⏱ 4 minutes</span>
+      <span>🔒 No account required</span>
+      <span>📊 Personalised score</span>
+      <span>🎯 Actionable roadmap</span>
+    </div>
+    <button class="btn-next" style="margin-top:28px;" onclick="startQuiz()">Start the Assessment</button>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progress-wrap" style="display:none;">
+    <div class="progress-label">
+      <span id="progress-text">Question 1 of 8</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="questions-wrap">
+
+    <div class="question-card" id="q1">
+      <div class="q-num">Question 1 of 8</div>
+      <div class="q-text">How do your analysts currently process inbound Confidential Information Memoranda?</div>
+      <div class="options">
+        <div class="option" onclick="selectOption(this, 1, 0)"><span class="option-key">A</span>Fully manual — analyst reads the full document and produces a screen memo</div>
+        <div class="option" onclick="selectOption(this, 1, 1)"><span class="option-key">B</span>Partial automation — we use search tools like Rogo or Hebbia to extract key data</div>
+        <div class="option" onclick="selectOption(this, 1, 2)"><span class="option-key">C</span>Mostly automated — workflow automation generates the screen memo</div>
+        <div class="option" onclick="selectOption(this, 1, -1)"><span class="option-key">D</span>What is a CIM?</div>
+      </div>
+      <div class="q-nav">
+        <div></div>
+        <button class="btn-next" onclick="nextQ(1)" disabled id="next1">Next →</button>
+      </div>
+    </div>
+
+    <div class="question-card" id="q2">
+      <div class="q-num">Question 2 of 8</div>
+      <div class="q-text">How many deals does your team screen per month on average?</div>
+      <div class="options">
+        <div class="option" onclick="selectOption(this, 2, 3)"><span class="option-key">A</span>50 or more deals per month</div>
+        <div class="option" onclick="selectOption(this, 2, 2)"><span class="option-key">B</span>20 to 50 deals per month</div>
+        <div class="option" onclick="selectOption(this, 2, 1)"><span class="option-key">C</span>5 to 20 deals per month</div>
+        <div class="option" onclick="selectOption(this, 2, 0)"><span class="option-key">D</span>Fewer than 5 deals per month</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQ(2)">← Back</button>
+        <button class="btn-next" onclick="nextQ(2)" disabled id="next2">Next →</button>
+      </div>
+    </div>
+
+    <div class="question-card" id="q3">
+      <div class="q-num">Question 3 of 8</div>
+      <div class="q-text">What is your average time from CIM receipt to initial screen memo completion?</div>
+      <div class="options">
+        <div class="option" onclick="selectOption(this, 3, 3)"><span class="option-key">A</span>Same day — less than 8 hours</div>
+        <div class="option" onclick="selectOption(this, 3, 2)"><span class="option-key">B</span>1 to 2 business days</div>
+        <div class="option" onclick="selectOption(this, 3, 1)"><span class="option-key">C</span>3 to 5 business days</div>
+        <div class="option" onclick="selectOption(this, 3, 0)"><span class="option-key">D</span>Over a week</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQ(3)">← Back</button>
+        <button class="btn-next" onclick="nextQ(3)" disabled id="next3">Next →</button>
+      </div>
+    </div>
+
+    <div class="question-card" id="q4">
+      <div class="q-num">Question 4 of 8</div>
+      <div class="q-text">Which AI platforms has your firm formally evaluated in the last 12 months?</div>
+      <div class="options">
+        <div class="option" onclick="selectOption(this, 4, 2)"><span class="option-key">A</span>Rogo, Hebbia, or both — but they felt too generic for our methodology</div>
+        <div class="option" onclick="selectOption(this, 4, 1)"><span class="option-key">B</span>General AI tools (Microsoft Copilot, ChatGPT) — early exploration only</div>
+        <div class="option" onclick="selectOption(this, 4, 3)"><span class="option-key">C</span>Luminance, DealRoom, or specialist M&A tools</div>
+        <div class="option" onclick="selectOption(this, 4, 0)"><span class="option-key">D</span>No formal AI evaluation has taken place</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQ(4)">← Back</button>
+        <button class="btn-next" onclick="nextQ(4)" disabled id="next4">Next →</button>
+      </div>
+    </div>
+
+    <div class="question-card" id="q5">
+      <div class="q-num">Question 5 of 8</div>
+      <div class="q-text">What is your firm's primary barrier to AI adoption for deal workflow?</div>
+      <div class="options">
+        <div class="option" onclick="selectOption(this, 5, 1)"><span class="option-key">A</span>Data security — documents cannot leave our environment</div>
+        <div class="option" onclick="selectOption(this, 5, 1)"><span class="option-key">B</span>Hallucination risk — we cannot afford wrong numbers in IC memos</div>
+        <div class="option" onclick="selectOption(this, 5, 2)"><span class="option-key">C</span>Integration complexity — our existing stack is difficult to connect to</div>
+        <div class="option" onclick="selectOption(this, 5, 1)"><span class="option-key">D</span>Cost justification — the ROI case is not clear enough to present internally</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQ(5)">← Back</button>
+        <button class="btn-next" onclick="nextQ(5)" disabled id="next5">Next →</button>
+      </div>
+    </div>
+
+    <div class="question-card" id="q6">
+      <div class="q-num">Question 6 of 8</div>
+      <div class="q-text">How many junior analysts does your firm dedicate to deal screening?</div>
+      <div class="options">
+        <div class="option" onclick="selectOption(this, 6, 3)"><span class="option-key">A</span>5 or more analysts — deal screening is a significant resource line</div>
+        <div class="option" onclick="selectOption(this, 6, 2)"><span class="option-key">B</span>2 to 4 analysts</div>
+        <div class="option" onclick="selectOption(this, 6, 1)"><span class="option-key">C</span>1 analyst — deal screening competes with other work</div>
+        <div class="option" onclick="selectOption(this, 6, 2)"><span class="option-key">D</span>None — deal screening is outsourced or done by senior team</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQ(6)">← Back</button>
+        <button class="btn-next" onclick="nextQ(6)" disabled id="next6">Next →</button>
+      </div>
+    </div>
+
+    <div class="question-card" id="q7">
+      <div class="q-num">Question 7 of 8</div>
+      <div class="q-text">Does your firm have a mandate or strategic priority to automate analyst workflows in the next 12 months?</div>
+      <div class="options">
+        <div class="option" onclick="selectOption(this, 7, 3)"><span class="option-key">A</span>Yes — it is an active board or partner-level priority</div>
+        <div class="option" onclick="selectOption(this, 7, 2)"><span class="option-key">B</span>Being discussed — the case has been made but no decision yet</div>
+        <div class="option" onclick="selectOption(this, 7, 0)"><span class="option-key">C</span>No — the firm is satisfied with current analyst capacity</div>
+        <div class="option" onclick="selectOption(this, 7, 1)"><span class="option-key">D</span>Unsure — it depends on whether the right tool exists</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQ(7)">← Back</button>
+        <button class="btn-next" onclick="nextQ(7)" disabled id="next7">Next →</button>
+      </div>
+    </div>
+
+    <div class="question-card" id="q8">
+      <div class="q-num">Question 8 of 8</div>
+      <div class="q-text">What is your single biggest deal flow frustration right now?</div>
+      <div class="options">
+        <div class="option" onclick="selectOption(this, 8, 3)"><span class="option-key">A</span>Speed — competitors are reaching conviction before we finish reading</div>
+        <div class="option" onclick="selectOption(this, 8, 2)"><span class="option-key">B</span>Consistency — different analysts produce different quality screen memos</div>
+        <div class="option" onclick="selectOption(this, 8, 1)"><span class="option-key">C</span>Coverage — we cannot screen enough deals with current team capacity</div>
+        <div class="option" onclick="selectOption(this, 8, 2)"><span class="option-key">D</span>Quality — analyst outputs need too much senior review and editing</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQ(8)">← Back</button>
+        <button class="btn-next" onclick="showEmailGate()" disabled id="next8">See My Score →</button>
+      </div>
+    </div>
+
+  </div><!-- /questions-wrap -->
+
+  <!-- EMAIL GATE -->
+  <div id="email-gate">
+    <div class="quiz-tag" style="margin-bottom:16px;">Almost There</div>
+    <h3>Your score is ready.</h3>
+    <p>Enter your name and work email to see your personalised AI readiness score, breakdown by dimension, and the exact workflow automation to prioritise first.</p>
+    <div class="email-form">
+      <input type="text" id="gate-name" placeholder="First name" />
+      <input type="email" id="gate-email" placeholder="Work email (e.g. j.smith@firmname.com)" />
+      <button class="btn-reveal" onclick="showResults()">Show My Score</button>
+    </div>
+    <p class="privacy-note">No spam. One relevant email from Jean at MDB Growth Capital with the full lead list. Unsubscribe any time.</p>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results-section">
+    <div class="dial-container">
+      <div class="quiz-tag" style="margin-bottom:20px;">Your AI Readiness Score</div>
+      <svg class="dial-svg" width="200" height="120" viewBox="0 0 200 120">
+        <defs>
+          <linearGradient id="dialGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#ef4444"/>
+            <stop offset="50%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#22c55e"/>
+          </linearGradient>
+        </defs>
+        <!-- Background arc -->
+        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12" stroke-linecap="round"/>
+        <!-- Score arc -->
+        <path id="score-arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#dialGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+        <!-- Needle -->
+        <line id="needle" x1="100" y1="100" x2="100" y2="28" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" transform-origin="100 100"/>
+        <circle cx="100" cy="100" r="5" fill="var(--accent)"/>
+      </svg>
+      <div class="score-display" id="score-display">0</div>
+      <div class="score-label" id="score-label">Calculating...</div>
+    </div>
+
+    <div id="result-interpretation"></div>
+
+    <div class="breakdown" id="score-breakdown">
+      <div class="breakdown-header">Score Breakdown by Dimension</div>
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="result-cta">
+      <h4>The full 29-firm deal team target list — ready to send</h4>
+      <p>Jean mapped 29 boutique M&A advisory and mid-market PE firms actively evaluating AI workflow tools. Every entry includes the decision-maker contact, buying signal, and ICP notes. This is the list your team needs before building your own from scratch.</p>
+      <a class="btn-cta" href="https://cal.com/jean-m-8f4kbr/15min" target="_blank">Book 15 Min — Get the List</a>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">Or email Jean directly: mdb.growthcapital@gmail.com</p>
+    </div>
+
+    <p style="font-size:11px;color:var(--text-dim);margin-top:24px;text-align:center;">Strategy and GTM research by Jean Mundabi Fala · MDB Growth Capital · 2026</p>
+  </div>
+
+</div><!-- /quiz-wrap -->
+
+<script>
+  let current = 0;
+  const answers = {};
+  const scores = {};
+
+  const dims = [
+    { key:'q1', label:'Current CIM Processing Method' },
+    { key:'q2', label:'Monthly Deal Volume' },
+    { key:'q3', label:'CIM-to-Screen Time' },
+    { key:'q4', label:'Prior AI Evaluation Experience' },
+    { key:'q5', label:'Primary Adoption Barrier' },
+    { key:'q6', label:'Analyst Capacity Constraint' },
+    { key:'q7', label:'Strategic AI Mandate' },
+    { key:'q8', label:'Deal Flow Frustration Type' },
+  ];
+
+  function startQuiz() {
+    document.getElementById('intro-section').style.display = 'none';
+    document.getElementById('progress-wrap').style.display = 'block';
+    showQ(1);
+    current = 1;
+  }
+
+  function showQ(n) {
+    document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+    const card = document.getElementById('q' + n);
+    if (card) card.classList.add('active');
+    updateProgress(n);
+  }
+
+  function updateProgress(n) {
+    const pct = Math.round(((n - 1) / 8) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = 'Question ' + n + ' of 8';
+    document.getElementById('progress-pct').textContent = pct + '%';
+  }
+
+  function selectOption(el, qNum, value) {
+    const opts = el.parentNode.querySelectorAll('.option');
+    opts.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    scores['q' + qNum] = value;
+    answers['q' + qNum] = el.textContent.trim();
+    document.getElementById('next' + qNum).removeAttribute('disabled');
+  }
+
+  function nextQ(n) {
+    if (!scores['q' + n] && scores['q' + n] !== 0) return;
+    if (n < 8) { current = n + 1; showQ(n + 1); }
+  }
+
+  function prevQ(n) {
+    if (n > 1) { current = n - 1; showQ(n - 1); }
+  }
+
+  function showEmailGate() {
+    document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('email-gate').style.display = 'block';
+  }
+
+  function showResults() {
+    const name = document.getElementById('gate-name').value.trim() || 'You';
+    document.getElementById('email-gate').style.display = 'none';
+
+    // Calculate total score
+    let total = 0;
+    Object.values(scores).forEach(v => { if (v > 0) total += v; });
+    const max = 3 * 8; // 24 max
+    const pct = Math.round((total / max) * 100);
+
+    document.getElementById('results-section').style.display = 'block';
+
+    // Animate score
+    let count = 0;
+    const target = pct;
+    const interval = setInterval(() => {
+      count = Math.min(count + 2, target);
+      document.getElementById('score-display').textContent = count;
+      // Arc animation
+      const circumference = 251;
+      const offset = circumference - (circumference * count / 100);
+      document.getElementById('score-arc').style.strokeDashoffset = offset;
+      // Needle rotation: -90 = left end (0%), +90 = right end (100%)
+      const angle = -90 + (count / 100) * 180;
+      document.getElementById('needle').setAttribute('transform', `rotate(${angle}, 100, 100)`);
+      if (count >= target) clearInterval(interval);
+    }, 18);
+
+    // Interpretation
+    let interp;
+    if (pct >= 70) {
+      interp = `<div class="result-card ready">
+        <div class="result-tag tag-ready">High Readiness — Act Now</div>
+        <h3>${name}, your firm is in the evaluation window.</h3>
+        <p>Your deal team is already experiencing the pain that Executa solves — high deal volume, speed pressure, and prior AI evaluation that felt too generic. The firms at this readiness level who move first on methodology-encoded AI are the ones winning mandates by Q3 2026. The window to build before competitors close it: 90 days.</p>
+      </div>`;
+      document.getElementById('score-label').textContent = 'High Readiness — Executa Candidate';
+    } else if (pct >= 40) {
+      interp = `<div class="result-card partial">
+        <div class="result-tag tag-partial">Moderate Readiness — Right Direction</div>
+        <h3>${name}, your firm is building toward AI adoption.</h3>
+        <p>The pain is present but the buying mandate is not yet confirmed at partner level. The next 90 days determine whether your firm leads the AI adoption wave in your segment or follows it. The firms that move from "being discussed" to "approved" fastest are the ones that see a demo on their own documents — not a generic product walkthrough.</p>
+      </div>`;
+      document.getElementById('score-label').textContent = 'Moderate Readiness — Emerging Candidate';
+    } else {
+      interp = `<div class="result-card early">
+        <div class="result-tag tag-early">Early Stage — Foundation Building</div>
+        <h3>${name}, your firm is at the beginning of this journey.</h3>
+        <p>Deal volume or team size may not yet justify a full AI workflow deployment. The most valuable starting point is understanding which workflow — IC memo, LBO model, or CIM parsing — creates the highest ROI per deal at your current volume. That is the right entry point before a broader platform evaluation.</p>
+      </div>`;
+      document.getElementById('score-label').textContent = 'Early Stage — Foundation First';
+    }
+    document.getElementById('result-interpretation').innerHTML = interp;
+
+    // Breakdown
+    let breakHtml = '';
+    dims.forEach(d => {
+      const s = scores[d.key] || 0;
+      const max3 = 3;
+      const bar = Math.round((s / max3) * 100);
+      breakHtml += `<div class="breakdown-item">
+        <span class="dim">${d.label}</span>
+        <span class="points">${s}/${max3}</span>
+      </div>`;
+    });
+    document.getElementById('score-breakdown').innerHTML =
+      '<div class="breakdown-header">Score Breakdown by Dimension</div>' + breakHtml;
+  }
+</script>
+</body>
+</html>

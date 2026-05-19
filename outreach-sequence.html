@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executa — Outreach Sequence · MDB Growth Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#08080f; --bg2:#0e0e1a; --bg3:#141420; --bg4:#1c1c2c;
+    --border:rgba(255,255,255,0.07);
+    --accent:#c9a227; --accent2:#e0b840;
+    --accent-soft:rgba(201,162,39,0.10); --accent-glow:rgba(201,162,39,0.20);
+    --text:#f0ede8; --text-muted:#8b8ba0; --text-dim:#4a4a60;
+    --success:#22c55e; --success-soft:rgba(34,197,94,0.10);
+    --danger:#ef4444; --danger-soft:rgba(239,68,68,0.10);
+    --linkedin:#0a66c2;
+    --font:'Space Grotesk',system-ui,sans-serif;
+    --mono:'Space Mono',monospace;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.7;}
+  .container{max-width:860px;margin:0 auto;padding:0 48px;}
+
+  header{
+    padding:20px 48px;
+    background:var(--bg2);border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .header-brand{font-size:13px;font-weight:800;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;}
+  .header-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+
+  /* STATS BAR */
+  .stats-bar{
+    background:var(--bg2);border-bottom:1px solid var(--border);
+    padding:16px 48px;
+    display:flex;gap:32px;align-items:center;flex-wrap:wrap;
+  }
+  .stat-item{
+    display:flex;align-items:center;gap:8px;
+    font-size:12px;color:var(--text-muted);
+  }
+  .stat-item strong{color:var(--accent2);font-weight:800;font-family:var(--mono);}
+
+  .page-hero{padding:48px 48px 32px;max-width:860px;margin:0 auto;}
+  .page-tag{
+    display:inline-block;
+    background:var(--accent-soft);border:1px solid var(--accent-glow);
+    color:var(--accent2);padding:5px 14px;border-radius:4px;
+    font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .page-hero h1{font-size:clamp(24px,3vw,38px);font-weight:800;line-height:1.15;letter-spacing:-1px;color:var(--text);margin-bottom:10px;}
+  .page-hero p{font-size:15px;color:var(--text-muted);max-width:560px;line-height:1.6;}
+
+  /* TIMELINE */
+  .timeline-container{
+    padding:0 48px 80px;
+    max-width:860px;margin:0 auto;
+  }
+  .timeline{position:relative;padding-left:48px;}
+  .timeline::before{
+    content:'';
+    position:absolute;left:16px;top:0;bottom:0;
+    width:2px;background:var(--border);
+  }
+
+  .tl-item{
+    position:relative;margin-bottom:32px;
+  }
+  .tl-dot{
+    position:absolute;left:-40px;top:16px;
+    width:16px;height:16px;border-radius:50%;
+    border:2px solid var(--bg);
+    z-index:2;
+    flex-shrink:0;
+  }
+  .tl-dot.email{background:var(--accent);}
+  .tl-dot.linkedin{background:var(--linkedin);}
+  .tl-dot.nurture{background:var(--success);}
+
+  .tl-day{
+    font-size:10px;font-weight:800;color:var(--text-dim);
+    text-transform:uppercase;letter-spacing:1px;
+    margin-bottom:6px;font-family:var(--mono);
+  }
+
+  .tl-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:12px;overflow:hidden;
+  }
+  .tl-card-header{
+    padding:14px 20px;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;flex-wrap:wrap;
+    background:var(--bg3);
+  }
+  .tl-card-header .step-title{font-size:14px;font-weight:700;color:var(--text);}
+  .tl-card-header .step-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+
+  .channel-tag{
+    display:inline-flex;align-items:center;gap:4px;
+    padding:3px 10px;border-radius:4px;
+    font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;
+  }
+  .ct-email{background:var(--accent-soft);color:var(--accent2);border:1px solid var(--accent-glow);}
+  .ct-linkedin{background:rgba(10,102,194,0.12);color:#60a5fa;border:1px solid rgba(10,102,194,0.25);}
+  .ct-nurture{background:var(--success-soft);color:var(--success);border:1px solid rgba(34,197,94,0.2);}
+  .pss-tag{
+    display:inline-block;padding:3px 10px;border-radius:4px;
+    background:var(--accent-soft);color:var(--accent2);
+    font-size:10.5px;font-weight:700;font-family:var(--mono);
+  }
+  .angle-tag{
+    display:inline-block;padding:3px 9px;border-radius:4px;
+    background:var(--bg4);color:var(--text-muted);
+    font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;
+  }
+
+  .tl-card-body{padding:20px;font-size:14px;color:var(--text-muted);line-height:1.7;}
+  .email-text{
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:8px;padding:16px 18px;
+    font-size:13.5px;color:var(--text);
+    white-space:pre-line;line-height:1.8;
+    margin-top:12px;
+  }
+  .subject-line{
+    font-size:12px;font-weight:700;color:var(--accent2);
+    margin-bottom:8px;padding-bottom:8px;
+    border-bottom:1px solid var(--border);
+    text-transform:uppercase;letter-spacing:0.5px;
+  }
+  .li-script{
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:8px;padding:14px 16px;
+    font-size:13px;color:var(--text-muted);
+    line-height:1.7;margin-top:10px;
+    font-style:italic;
+  }
+
+  /* PAUSE INDICATOR */
+  .tl-pause{
+    position:relative;margin-bottom:28px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .pause-line{flex:1;height:1px;background:var(--border);}
+  .pause-label{
+    font-size:10px;font-weight:700;color:var(--text-dim);
+    text-transform:uppercase;letter-spacing:1px;
+    white-space:nowrap;padding:4px 10px;
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:4px;
+  }
+
+  /* LEGEND */
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;
+    margin-bottom:28px;
+    padding:14px 16px;
+    background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  }
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);}
+  .legend-dot{width:10px;height:10px;border-radius:50%;}
+
+  @media(max-width:768px){
+    .container,.page-hero,.timeline-container,.stats-bar,header{padding-left:20px;padding-right:20px;}
+    .timeline{padding-left:32px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-brand">Executa — Outreach Sequence</div>
+    <div class="header-sub">Prepared by Jean Mundabi Fala · MDB Growth Capital · May 2026</div>
+  </div>
+  <div style="font-size:12px;color:var(--text-muted);">For: Mathew, Co-founder</div>
+</header>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><strong>2</strong> emails</div>
+  <div class="stat-item"><strong>3</strong> LinkedIn touches</div>
+  <div class="stat-item"><strong>21-day</strong> sequence</div>
+  <div class="stat-item"><strong>PSS avg 86.5</strong> / 100</div>
+  <div class="stat-item"><strong>No Twitter</strong> — decision-maker not confirmed active on X</div>
+  <div class="stat-item"><strong>HubSpot</strong> nurture trigger on Day 21</div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-tag">21-Day Multi-Channel Sequence · 2 Emails · 3 LinkedIn Touches</div>
+  <h1>Mathew — Day-by-Day Outreach Timeline</h1>
+  <p>The complete sequence for Mathew at Executa. Two PSS-scored cold emails (Trigger and Friction angles) with three LinkedIn touches. Sequence ends at Day 8 with a breakup message. Day 21 triggers HubSpot nurture for non-replies.</p>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-container">
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent);"></div>Email</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0a66c2;"></div>LinkedIn</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--success);"></div>Nurture</div>
+  </div>
+
+  <div class="timeline">
+
+    <!-- DAY 0 — EMAIL 1 -->
+    <div class="tl-item">
+      <div class="tl-dot email"></div>
+      <div class="tl-day">Day 0 · Launch</div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="step-title">Email 1 — Trigger</span>
+          <div class="step-meta">
+            <span class="channel-tag ct-email">Email</span>
+            <span class="pss-tag">PSS 88</span>
+            <span class="angle-tag">Trigger Angle</span>
+            <span style="font-size:11px;color:var(--text-dim);">91 words</span>
+          </div>
+        </div>
+        <div class="tl-card-body">
+          <p style="margin-bottom:12px;font-size:13px;">Sent directly to mw@getexecuta.com. Trigger angle: founder-led sales ceiling with new commercial hire ramping. Delivery CTA — leads.md (28 firms) confirmed before sending. No mention of the JD directly. Observation framed as peer-to-peer business intelligence.</p>
+          <div class="email-text">
+            <div class="subject-line">Subject: Jefferies. Lazard. Rothschild.</div>Mathew,
+
+Executa built to this point on referrals from advisory and credit contacts. That model has a ceiling.
+
+The risk is that PE Partners and M&A MDs shortlist a deal workflow AI vendor before your hire finishes building the list.
+
+We help you reach named deal professionals already evaluating workflow tools — before that shortlist forms.
+
+Five advisory or PE firm wins at that deal size can mean £150,000 or more in new ARR.
+
+We handle the account research, outreach, and qualification so your team stays focused on commercial conversations.
+
+I can send the list over.
+
+Jean</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 1 — LINKEDIN CONNECT -->
+    <div class="tl-item">
+      <div class="tl-dot linkedin"></div>
+      <div class="tl-day">Day 1</div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="step-title">LinkedIn — Connection Request</span>
+          <div class="step-meta">
+            <span class="channel-tag ct-linkedin">LinkedIn</span>
+            <span class="angle-tag">Touch 1 of 3</span>
+          </div>
+        </div>
+        <div class="tl-card-body">
+          <p style="font-size:13px;margin-bottom:10px;">No note attached to the connection request. Jean follows Mathew's company LinkedIn page and likes or comments on any recent post from Executa before sending. Mathew's LinkedIn was not publicly confirmed — verify profile exists before sending.</p>
+          <div class="li-script">Connection request sent — no message. Standard LinkedIn connect for professional context. Pair with a genuine comment on an Executa company page post if one is found in the last 60 days.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 3 — EMAIL 2 -->
+    <div class="tl-item">
+      <div class="tl-dot email"></div>
+      <div class="tl-day">Day 3</div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="step-title">Email 2 — Friction</span>
+          <div class="step-meta">
+            <span class="channel-tag ct-email">Email</span>
+            <span class="pss-tag">PSS 85</span>
+            <span class="angle-tag">Friction Angle</span>
+            <span style="font-size:11px;color:var(--text-dim);">99 words</span>
+          </div>
+        </div>
+        <div class="tl-card-body">
+          <p style="margin-bottom:12px;font-size:13px;">Different angle from Email 1. Friction frame: the gap between Executa's current boutique client tier and the 200-firm mid-market universe Executa needs for enterprise ARR. Urgency: firms evaluating now will not be in evaluation mode again for 12 months. Question CTA — no list described in this email.</p>
+          <div class="email-text">
+            <div class="subject-line">Subject: The 200 firms Rogo is not calling.</div>Mathew,
+
+Rogo raised $160 million and went directly for Jefferies, Lazard, and Rothschild. Bulge bracket. Enterprise motion. That market is spoken for.
+
+The mid-market is not. Two hundred boutique M&A advisory and PE firms in the UK and Europe are evaluating deal workflow AI without a clear leader.
+
+They cannot find Executa because Executa is not reaching them.
+
+The accounts comparing platforms now will not be back in evaluation mode for 12 months.
+
+We handle the account research, outreach, and qualification so your team enters those conversations first.
+
+Worth showing you how we'd approach this for Executa?
+
+Jean</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 5 — LINKEDIN DM -->
+    <div class="tl-item">
+      <div class="tl-dot linkedin"></div>
+      <div class="tl-day">Day 5</div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="step-title">LinkedIn — Follow-Up DM</span>
+          <div class="step-meta">
+            <span class="channel-tag ct-linkedin">LinkedIn</span>
+            <span class="angle-tag">Touch 2 of 3</span>
+          </div>
+        </div>
+        <div class="tl-card-body">
+          <p style="font-size:13px;margin-bottom:10px;">Only send if Mathew accepted the Day 1 connection request. Short message — reference the specific gap (Rogo's mid-market void) without repeating the full email. One sentence observation, one CTA.</p>
+          <div class="li-script">"Mathew — just sent over the second email on the 200 mid-market firms Rogo is not calling. The list is mapped if you want it. Happy to share."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 8 — LINKEDIN BREAKUP -->
+    <div class="tl-item">
+      <div class="tl-dot linkedin"></div>
+      <div class="tl-day">Day 8</div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="step-title">LinkedIn — Breakup Message</span>
+          <div class="step-meta">
+            <span class="channel-tag ct-linkedin">LinkedIn</span>
+            <span class="angle-tag">Touch 3 of 3</span>
+          </div>
+        </div>
+        <div class="tl-card-body">
+          <p style="font-size:13px;margin-bottom:10px;">Final touch. Low friction. No hard close. Leave the door open. The breakup message is designed to get a final reply — including "not interested" — so the prospect can be removed from the active sequence or routed to nurture.</p>
+          <div class="li-script">"Mathew — closing the loop. If the timing isn't right or someone else is handling this, no problem. The 28-firm list and the two emails are still available if anything changes. Good luck with the commercial build."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAUSE INDICATOR -->
+    <div class="tl-pause">
+      <div class="pause-line"></div>
+      <div class="pause-label">Sequence ends — non-reply enters HubSpot nurture on Day 21</div>
+      <div class="pause-line"></div>
+    </div>
+
+    <!-- DAY 21 — NURTURE -->
+    <div class="tl-item">
+      <div class="tl-dot nurture"></div>
+      <div class="tl-day">Day 21</div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="step-title">HubSpot Nurture — Triggered</span>
+          <div class="step-meta">
+            <span class="channel-tag ct-nurture">Nurture</span>
+            <span class="angle-tag">Authority Engine</span>
+          </div>
+        </div>
+        <div class="tl-card-body">
+          <p style="font-size:13px;">Non-reply after Day 8 triggers the 20-week Authority Engine nurture sequence. Pure value delivery — no pitches. Topics tailored to PE and M&A buyer psychology: AI accuracy standards for financial documents, benchmark data on analyst productivity, market maps of which PE firms are deploying AI workflow tools, deal velocity benchmarks by fund size. Contact is re-flagged as warm in HubSpot if they open 3 or more nurture emails or click any link. Jean is notified at the warm threshold for re-engagement.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <!-- SEQUENCE NOTES -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:16px;">
+    <div style="font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Sequence Notes and Rules</div>
+    <ul style="padding-left:18px;font-size:13px;color:var(--text-muted);line-height:2.2;">
+      <li><strong style="color:var(--text);">Twitter/X step excluded</strong> — Mathew's Twitter/X activity not confirmed active in research brief Task 1B. Never add a channel that isn't verified.</li>
+      <li><strong style="color:var(--text);">pvp_email on HOLD</strong> — Wedge Score 8.6 qualifies, but Companies House lookup not yet run. Deploy pvp_email only after the named firm count is verified and matches the email body. If unlocked, pvp_email inserts as seq2 (Day 3) and Email 2 Friction moves to seq3 (Day 6).</li>
+      <li><strong style="color:var(--text);">CTA routing rule</strong> — Email 1 uses Delivery CTA because leads.md (28 firms) confirmed. Email 2 uses Question CTA because no list is referenced in that email body. Never promise a list that does not exist.</li>
+      <li><strong style="color:var(--text);">LinkedIn gating</strong> — Day 5 DM and Day 8 breakup only send if Day 1 connection was accepted. Never DM a non-connection.</li>
+      <li><strong style="color:var(--text);">Spam word audit</strong> — Both emails cleared the spam word checker. No banned words: pipeline, engine, machine, infrastructure, synergy, leverage, outbound motion, scaling.</li>
+      <li><strong style="color:var(--text);">Email verification</strong> — mw@getexecuta.com provided directly in task brief. Verify the contact is still at Executa before sending (employment verification rule: search "Mathew W Executa LinkedIn 2026").</li>
+    </ul>
+  </div>
+  <p style="font-size:11px;color:var(--text-dim);margin-top:20px;text-align:center;">Strategy and GTM research by Jean Mundabi Fala · MDB Growth Capital · 2026</p>
+</div>
+
+</body>
+</html>
